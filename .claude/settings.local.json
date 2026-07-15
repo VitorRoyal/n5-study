@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc *)",
+      "Bash(rm -rf \"C:\\\\Users\\\\Vitor\\\\Downloads\\\\n5-study\\\\n5-study\\\\.claude\")",
+      "Bash(npm run *)",
+      "Bash(pkill -f \"vite\")",
+      "Bash(tasklist //FI \"IMAGENAME eq node.exe\")"
+    ]
+  }
+}
