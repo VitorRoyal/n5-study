@@ -1,9 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Navbar } from "../../components/Navbar";
 import { BackButton } from "../../components/BackButton";
 import { PageWrapper, ContentArea, Subtitle } from "../../styles/GlobalStyles";
 import { TabButton, QuizWrapper, QuizGrid, ScoreCounter } from "./style";
-import { flashcardsByCategory, categoryLabels, type FlashcardCategory } from "./data";
+import {
+  flashcardsByCategory,
+  categoryLabels,
+  type FlashcardCategory,
+  type FlashcardItem,
+} from "./data";
 import { FlashCardItem } from "./FlashCardItem";
 
 const categories: FlashcardCategory[] = ["hiragana", "katakana", "kanji"];
@@ -13,17 +18,31 @@ function createInitialPointers() {
   return Array.from({ length: SLOT_COUNT }, (_, index) => index);
 }
 
+function shuffleCards(cards: FlashcardItem[]) {
+  const shuffled = [...cards];
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const target = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[target]] = [shuffled[target], shuffled[index]];
+  }
+
+  return shuffled;
+}
+
 export function Flashcards() {
   const [activeCategory, setActiveCategory] = useState<FlashcardCategory>("hiragana");
+  const [deck, setDeck] = useState<FlashcardItem[]>(() =>
+    shuffleCards(flashcardsByCategory.hiragana)
+  );
   const [slotPointers, setSlotPointers] = useState<number[]>(createInitialPointers);
   const [correctCount, setCorrectCount] = useState(0);
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
-  const items = flashcardsByCategory[activeCategory];
-
-  useEffect(() => {
+  function handleCategoryChange(category: FlashcardCategory) {
+    setActiveCategory(category);
+    setDeck(shuffleCards(flashcardsByCategory[category]));
     setSlotPointers(createInitialPointers());
-  }, [activeCategory]);
+  }
 
   function handleCorrect(slotIndex: number) {
     setSlotPointers((current) =>
@@ -46,20 +65,24 @@ export function Flashcards() {
             key={category}
             type="button"
             $active={activeCategory === category}
-            onClick={() => setActiveCategory(category)}
+            onClick={() => handleCategoryChange(category)}
           >
             {categoryLabels[category]}
           </TabButton>
         ))}
       />
       <ContentArea>
-        <Subtitle>Digite a leitura de cada card para avancar para o proximo.</Subtitle>
+        <Subtitle>
+          {activeCategory === "kanji"
+            ? "Digite a leitura ou o significado de cada card para avancar para o proximo."
+            : "Digite a leitura de cada card para avancar para o proximo."}
+        </Subtitle>
         <QuizWrapper>
           <QuizGrid>
             {slotPointers.map((pointer, slotIndex) => (
               <FlashCardItem
                 key={slotIndex}
-                item={items[pointer % items.length]}
+                item={deck[pointer % deck.length]}
                 onCorrect={() => handleCorrect(slotIndex)}
                 inputRef={(element) => {
                   inputRefs.current[slotIndex] = element;

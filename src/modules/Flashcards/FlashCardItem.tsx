@@ -24,18 +24,31 @@ const REVEAL_DURATION_MS = 2000;
 const FLIP_TRANSITION_MS = 600;
 
 function normalizeAnswer(value: string) {
-  return value.trim().toLowerCase();
+  return value
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "");
 }
 
-function isCorrectAnswer(value: string, reading: string) {
+function collectAlternatives(source: string) {
+  return [source, ...source.split(/[/,]/)]
+    .map((alternative) => normalizeAnswer(alternative))
+    .filter((alternative) => alternative.length > 0);
+}
+
+function isCorrectAnswer(value: string, item: FlashcardItem) {
   const normalized = normalizeAnswer(value);
   if (!normalized) {
     return false;
   }
-  return reading
-    .split("/")
-    .map((alternative) => normalizeAnswer(alternative))
-    .includes(normalized);
+
+  const accepted = [
+    ...collectAlternatives(item.reading),
+    ...(item.meaning ? collectAlternatives(item.meaning) : []),
+  ];
+
+  return accepted.includes(normalized);
 }
 
 export function FlashCardItem({ item, onCorrect, inputRef, isLastSlot, onWrapToFirst }: FlashCardItemProps) {
@@ -72,7 +85,7 @@ export function FlashCardItem({ item, onCorrect, inputRef, isLastSlot, onWrapToF
       return;
     }
 
-    if (!isCorrectAnswer(nextValue, item.reading)) {
+    if (!isCorrectAnswer(nextValue, item)) {
       return;
     }
 
