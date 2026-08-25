@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <clipPath id="glass-clip">
+      <path d="M62 48h76l-10 118a8 8 0 0 1-8 7H80a8 8 0 0 1-8-7z"/>
+    </clipPath>
+  </defs>
+  <path d="M62 48h76l-10 118a8 8 0 0 1-8 7H80a8 8 0 0 1-8-7z" fill="#DCEBF7"/>
+  <g clip-path="url(#glass-clip)">
+    <rect x="55" y="86" width="90" height="100" fill="#5BA9DE"/>
+    <path d="M55 92c12-8 24 8 36 0s24 8 36 0 18 4 24 0v-16H55z" fill="#8CC6EA"/>
+  </g>
+  <path d="M62 48h76l-10 118a8 8 0 0 1-8 7H80a8 8 0 0 1-8-7z" fill="none" stroke="#B8D6E8" stroke-width="5"/>
+  <ellipse cx="100" cy="48" rx="38" ry="9" fill="#EAF4FB" stroke="#B8D6E8" stroke-width="5"/>
+  <path d="M80 104v40" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" opacity="0.55"/>
+</svg>

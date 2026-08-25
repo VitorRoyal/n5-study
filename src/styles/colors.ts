@@ -8,6 +8,8 @@ export const colors = {
   indigoSoft: "#4C5C95",
   sealRed: "#B23A2E",
   sealRedSoft: "#D2685C",
+  jade: "#3F7D5A",
+  jadeSoft: "#6FA98A",
   line: "#DCD4C0",
   lineStrong: "#C9BFA5",
   gold: "#B58A3D",

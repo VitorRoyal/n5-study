@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <clipPath id="cake-clip">
+      <path d="M46 168V96a14 14 0 0 1 14-14h80a14 14 0 0 1 14 14v72z"/>
+    </clipPath>
+  </defs>
+  <ellipse cx="100" cy="170" rx="76" ry="16" fill="#FFFFFF"/>
+  <ellipse cx="100" cy="170" rx="76" ry="16" fill="none" stroke="#E4DCCB" stroke-width="3"/>
+  <g clip-path="url(#cake-clip)">
+    <rect x="40" y="82" width="120" height="90" fill="#FBF3E0"/>
+    <rect x="40" y="96" width="120" height="22" fill="#F7D98A"/>
+    <rect x="40" y="140" width="120" height="22" fill="#F7D98A"/>
+    <ellipse cx="70" cy="129" rx="13" ry="10" fill="#EE8FA0"/>
+    <ellipse cx="100" cy="129" rx="13" ry="10" fill="#EE8FA0"/>
+    <ellipse cx="130" cy="129" rx="13" ry="10" fill="#EE8FA0"/>
+    <ellipse cx="70" cy="129" rx="13" ry="10" fill="none" stroke="#DA5B72" stroke-width="3"/>
+    <ellipse cx="100" cy="129" rx="13" ry="10" fill="none" stroke="#DA5B72" stroke-width="3"/>
+    <ellipse cx="130" cy="129" rx="13" ry="10" fill="none" stroke="#DA5B72" stroke-width="3"/>
+  </g>
+  <path d="M46 168V96a14 14 0 0 1 14-14h80a14 14 0 0 1 14 14v72z" fill="none" stroke="#E4DCCB" stroke-width="3"/>
+  <path d="M64 82c0-12 8-18 14-18s14 6 14 18z" fill="#FFFFFF"/>
+  <path d="M108 82c0-12 8-18 14-18s14 6 14 18z" fill="#FFFFFF"/>
+  <path d="M100 76c-16 0-26-12-26-24 0-10 12-18 26-18s26 8 26 18c0 12-10 24-26 24z" fill="#E23E4E"/>
+  <path d="M92 30c2-8 6-12 8-14 2 2 6 6 8 14z" fill="#5E9B4E"/>
+  <circle cx="90" cy="44" r="2.2" fill="#FFE7A8"/>
+  <circle cx="104" cy="40" r="2.2" fill="#FFE7A8"/>
+  <circle cx="112" cy="52" r="2.2" fill="#FFE7A8"/>
+  <circle cx="96" cy="58" r="2.2" fill="#FFE7A8"/>
+</svg>

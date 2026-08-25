@@ -5,13 +5,14 @@ import { PageWrapper, ContentArea, Subtitle } from "../../styles/GlobalStyles";
 import { TabButton, QuizWrapper, QuizGrid, ScoreCounter } from "./style";
 import {
   flashcardsByCategory,
-  categoryLabels,
-  type FlashcardCategory,
+  tabLabels,
   type FlashcardItem,
+  type FlashcardTab,
 } from "./data";
 import { FlashCardItem } from "./FlashCardItem";
+import { ImageQuiz } from "./ImageQuiz";
 
-const categories: FlashcardCategory[] = ["hiragana", "katakana", "kanji"];
+const tabs: FlashcardTab[] = ["hiragana", "katakana", "kanji", "images"];
 const SLOT_COUNT = 5;
 
 function createInitialPointers() {
@@ -29,8 +30,18 @@ function shuffleCards(cards: FlashcardItem[]) {
   return shuffled;
 }
 
+function buildSubtitle(tab: FlashcardTab) {
+  if (tab === "images") {
+    return "Escolha a palavra que corresponde a imagem.";
+  }
+  if (tab === "kanji") {
+    return "Digite a leitura ou o significado de cada card para avancar para o proximo.";
+  }
+  return "Digite a leitura de cada card para avancar para o proximo.";
+}
+
 export function Flashcards() {
-  const [activeCategory, setActiveCategory] = useState<FlashcardCategory>("hiragana");
+  const [activeTab, setActiveTab] = useState<FlashcardTab>("hiragana");
   const [deck, setDeck] = useState<FlashcardItem[]>(() =>
     shuffleCards(flashcardsByCategory.hiragana)
   );
@@ -38,9 +49,14 @@ export function Flashcards() {
   const [correctCount, setCorrectCount] = useState(0);
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
 
-  function handleCategoryChange(category: FlashcardCategory) {
-    setActiveCategory(category);
-    setDeck(shuffleCards(flashcardsByCategory[category]));
+  function handleTabChange(tab: FlashcardTab) {
+    setActiveTab(tab);
+
+    if (tab === "images") {
+      return;
+    }
+
+    setDeck(shuffleCards(flashcardsByCategory[tab]));
     setSlotPointers(createInitialPointers());
   }
 
@@ -60,41 +76,43 @@ export function Flashcards() {
       <Navbar
         title="Flashcards"
         left={<BackButton />}
-        right={categories.map((category) => (
+        right={tabs.map((tab) => (
           <TabButton
-            key={category}
+            key={tab}
             type="button"
-            $active={activeCategory === category}
-            onClick={() => handleCategoryChange(category)}
+            $active={activeTab === tab}
+            onClick={() => handleTabChange(tab)}
           >
-            {categoryLabels[category]}
+            {tabLabels[tab]}
           </TabButton>
         ))}
       />
       <ContentArea>
-        <Subtitle>
-          {activeCategory === "kanji"
-            ? "Digite a leitura ou o significado de cada card para avancar para o proximo."
-            : "Digite a leitura de cada card para avancar para o proximo."}
-        </Subtitle>
-        <QuizWrapper>
-          <QuizGrid>
-            {slotPointers.map((pointer, slotIndex) => (
-              <FlashCardItem
-                key={slotIndex}
-                item={deck[pointer % deck.length]}
-                onCorrect={() => handleCorrect(slotIndex)}
-                inputRef={(element) => {
-                  inputRefs.current[slotIndex] = element;
-                }}
-                isLastSlot={slotIndex === SLOT_COUNT - 1}
-                onWrapToFirst={focusFirstInput}
-              />
-            ))}
-          </QuizGrid>
-        </QuizWrapper>
+        <Subtitle>{buildSubtitle(activeTab)}</Subtitle>
+        {activeTab === "images" ? (
+          <ImageQuiz />
+        ) : (
+          <>
+            <QuizWrapper>
+              <QuizGrid>
+                {slotPointers.map((pointer, slotIndex) => (
+                  <FlashCardItem
+                    key={slotIndex}
+                    item={deck[pointer % deck.length]}
+                    onCorrect={() => handleCorrect(slotIndex)}
+                    inputRef={(element) => {
+                      inputRefs.current[slotIndex] = element;
+                    }}
+                    isLastSlot={slotIndex === SLOT_COUNT - 1}
+                    onWrapToFirst={focusFirstInput}
+                  />
+                ))}
+              </QuizGrid>
+            </QuizWrapper>
+            <ScoreCounter>Acertos: {correctCount}</ScoreCounter>
+          </>
+        )}
       </ContentArea>
-      <ScoreCounter>Acertos: {correctCount}</ScoreCounter>
     </PageWrapper>
   );
 }

@@ -268,8 +268,11 @@ export const flashcardsByCategory: Record<FlashcardCategory, FlashcardItem[]> = 
   ],
 };
 
-export const categoryLabels: Record<FlashcardCategory, string> = {
+export type FlashcardTab = FlashcardCategory | "images";
+
+export const tabLabels: Record<FlashcardTab, string> = {
   hiragana: "Hiragana",
   katakana: "Katakana",
   kanji: "Kanjis",
+  images: "Imagens",
 };

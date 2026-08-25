@@ -151,3 +151,156 @@ export const FlashCardInput = styled.input`
     border-color: ${colors.indigo};
   }
 `;
+
+export type ImageOptionState = "idle" | "correct" | "wrong" | "muted";
+
+export const ImageQuizWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-top: 24px;
+`;
+
+export const ImageQuizProgress = styled.span`
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: ${colors.inkSoft};
+`;
+
+export const ImageCardShell = styled.div`
+  width: 320px;
+  height: 300px;
+  perspective: 1200px;
+`;
+
+export const Illustration = styled.img`
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+`;
+
+export const ImageOptionsColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  width: 320px;
+`;
+
+export const ImageOptionButton = styled.button<{ $state: ImageOptionState }>`
+  background-color: ${colors.surface};
+  border: 3px solid ${colors.lineStrong};
+  border-radius: 999px;
+  padding: 12px 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transition: transform 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    border-color: ${colors.indigo};
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${colors.sealRed};
+    outline-offset: 2px;
+  }
+
+  ${({ $state }) =>
+    $state === "correct" &&
+    css`
+      border-color: ${colors.jade};
+      background-color: ${colors.surface};
+    `}
+
+  ${({ $state }) =>
+    $state === "wrong" &&
+    css`
+      border-color: ${colors.sealRed};
+    `}
+
+  ${({ $state }) =>
+    $state === "muted" &&
+    css`
+      opacity: 0.45;
+    `}
+
+  &:disabled {
+    cursor: default;
+  }
+`;
+
+export const ImageOptionKana = styled.span`
+  font-family: "Shippori Mincho", serif;
+  font-size: 24px;
+  color: ${colors.ink};
+`;
+
+export const ImageOptionRomaji = styled.span`
+  font-size: 14px;
+  color: ${colors.inkSoft};
+`;
+
+export const RevealTitle = styled.strong<{ $correct: boolean }>`
+  font-size: 16px;
+  color: ${({ $correct }) => ($correct ? colors.jade : colors.sealRed)};
+`;
+
+export const RevealText = styled.span`
+  font-size: 14px;
+  color: ${colors.inkSoft};
+  text-align: center;
+  line-height: 1.5;
+`;
+
+export const RevealHighlight = styled.span`
+  font-size: 14px;
+  color: ${colors.jade};
+  font-weight: 600;
+  text-align: center;
+`;
+
+export const NextQuestionButton = styled.button`
+  border: 2px solid ${colors.indigo};
+  background-color: ${colors.indigo};
+  color: ${colors.surface};
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+
+  &:hover {
+    background-color: ${colors.indigoSoft};
+    border-color: ${colors.indigoSoft};
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${colors.sealRed};
+    outline-offset: 2px;
+  }
+`;
+
+export const ImageResultCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  background-color: ${colors.surface};
+  border: 3px solid ${colors.lineStrong};
+  border-radius: 20px;
+  padding: 40px 48px;
+`;
+
+export const ImageResultScore = styled.strong`
+  font-family: "Shippori Mincho", serif;
+  font-size: 44px;
+  color: ${colors.indigo};
+`;
