@@ -6,6 +6,7 @@ import { TabButton, QuizWrapper, QuizGrid, ScoreCounter } from "./style";
 import {
   flashcardsByCategory,
   tabLabels,
+  type FlashcardCategory,
   type FlashcardItem,
   type FlashcardTab,
 } from "./data";
@@ -30,10 +31,7 @@ function shuffleCards(cards: FlashcardItem[]) {
   return shuffled;
 }
 
-function buildSubtitle(tab: FlashcardTab) {
-  if (tab === "images") {
-    return "Escolha a palavra que corresponde a imagem.";
-  }
+function buildSubtitle(tab: FlashcardCategory) {
   if (tab === "kanji") {
     return "Digite a leitura ou o significado de cada card para avancar para o proximo.";
   }
@@ -88,11 +86,11 @@ export function Flashcards() {
         ))}
       />
       <ContentArea>
-        <Subtitle>{buildSubtitle(activeTab)}</Subtitle>
         {activeTab === "images" ? (
           <ImageQuiz />
         ) : (
           <>
+            <Subtitle>{buildSubtitle(activeTab)}</Subtitle>
             <QuizWrapper>
               <QuizGrid>
                 {slotPointers.map((pointer, slotIndex) => (

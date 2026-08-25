@@ -266,7 +266,109 @@ export const imageCards: ImageCard[] = [
     romaji: "doa",
     meaning: "porta",
   },
+  {
+    id: "img-kagi",
+    image: "/illustrations/key.svg",
+    character: "かぎ",
+    romaji: "kagi",
+    meaning: "chave",
+  },
+  {
+    id: "img-mado",
+    image: "/illustrations/window.svg",
+    character: "まど",
+    romaji: "mado",
+    meaning: "janela",
+  },
+  {
+    id: "img-kamera",
+    image: "/illustrations/camera.svg",
+    character: "カメラ",
+    romaji: "kamera",
+    meaning: "câmera",
+  },
+  {
+    id: "img-tegami",
+    image: "/illustrations/letter.svg",
+    character: "てがみ",
+    romaji: "tegami",
+    meaning: "carta",
+  },
+  {
+    id: "img-ginkou",
+    image: "/illustrations/bank.svg",
+    character: "ぎんこう",
+    romaji: "ginkou",
+    meaning: "banco",
+  },
+  {
+    id: "img-yuki",
+    image: "/illustrations/snow.svg",
+    character: "ゆき",
+    romaji: "yuki",
+    meaning: "neve",
+  },
+  {
+    id: "img-tsuki",
+    image: "/illustrations/moon.svg",
+    character: "つき",
+    romaji: "tsuki",
+    meaning: "lua",
+  },
+  {
+    id: "img-uma",
+    image: "/illustrations/horse.svg",
+    character: "うま",
+    romaji: "uma",
+    meaning: "cavalo",
+  },
+  {
+    id: "img-buta",
+    image: "/illustrations/pig.svg",
+    character: "ぶた",
+    romaji: "buta",
+    meaning: "porco",
+  },
+  {
+    id: "img-gohan",
+    image: "/illustrations/rice.svg",
+    character: "ごはん",
+    romaji: "gohan",
+    meaning: "arroz cozido, refeição",
+  },
+  {
+    id: "img-sushi",
+    image: "/illustrations/sushi.svg",
+    character: "すし",
+    romaji: "sushi",
+    meaning: "sushi",
+  },
+  {
+    id: "img-ocha",
+    image: "/illustrations/tea.svg",
+    character: "おちゃ",
+    romaji: "ocha",
+    meaning: "chá",
+  },
+  {
+    id: "img-pasokon",
+    image: "/illustrations/laptop.svg",
+    character: "パソコン",
+    romaji: "pasokon",
+    meaning: "computador",
+  },
+  {
+    id: "img-boushi",
+    image: "/illustrations/cap.svg",
+    character: "ぼうし",
+    romaji: "boushi",
+    meaning: "chapéu, boné",
+  },
 ];
+
+export const quizLengthOptions = [10, 25, 50];
+
+export const defaultQuizLength = 10;
 
 function shuffle<T>(items: T[]) {
   const shuffled = [...items];
@@ -279,16 +381,16 @@ function shuffle<T>(items: T[]) {
   return shuffled;
 }
 
-export function buildImageQuestions(): ImageQuestion[] {
-  return shuffle(imageCards).map((card) => {
-    const distractors = shuffle(imageCards.filter((candidate) => candidate.id !== card.id)).slice(
-      0,
-      OPTIONS_PER_QUESTION - 1
-    );
+export function buildImageQuestions(length: number): ImageQuestion[] {
+  return shuffle(imageCards)
+    .slice(0, Math.min(length, imageCards.length))
+    .map((card) => {
+      const others = imageCards.filter((candidate) => candidate.id !== card.id);
+      const distractors = shuffle(others).slice(0, OPTIONS_PER_QUESTION - 1);
 
-    return {
-      card,
-      options: shuffle([card, ...distractors]),
-    };
-  });
+      return {
+        card,
+        options: shuffle([card, ...distractors]),
+      };
+    });
 }

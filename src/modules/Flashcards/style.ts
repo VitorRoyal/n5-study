@@ -170,6 +170,46 @@ export const ImageQuizProgress = styled.span`
   color: ${colors.inkSoft};
 `;
 
+export const QuizHeaderRow = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+`;
+
+export const QuizLengthRow = styled.label`
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: ${colors.inkSoft};
+`;
+
+export const QuizLengthSelect = styled.select`
+  font-family: "Zen Kaku Gothic New", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: ${colors.ink};
+  background-color: ${colors.surface};
+  border: 2px solid ${colors.lineStrong};
+  border-radius: 999px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+
+  &:hover {
+    border-color: ${colors.indigo};
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${colors.sealRed};
+    outline-offset: 2px;
+  }
+`;
+
 export const ImageCardShell = styled.div`
   width: 320px;
   height: 300px;
