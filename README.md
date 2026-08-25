@@ -106,3 +106,12 @@ Sugestões de funcionalidades que podem agregar valor ao projeto:
 - Persistência do progresso (local storage ou conta de usuário)
 - Modo escuro
 - Suporte a PWA para uso offline
+
+---
+
+## Créditos
+
+As ilustrações do quiz de imagens (`public/illustrations/`) são do projeto
+[Fluent Emoji](https://github.com/microsoft/fluentui-emoji) da Microsoft, no estilo Flat,
+distribuídas sob a licença MIT. O texto completo da licença está em
+`public/illustrations/LICENSE.txt`.
