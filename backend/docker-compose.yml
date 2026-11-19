@@ -1,3 +1,5 @@
+name: n5study
+
 services:
   banco:
     image: postgres:16-alpine
@@ -17,7 +19,7 @@ services:
       retries: 10
 
   api:
-    build: ./backend
+    build: .
     container_name: n5study-api
     depends_on:
       banco:
