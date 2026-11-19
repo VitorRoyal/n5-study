@@ -1,0 +1,36 @@
+services:
+  banco:
+    image: postgres:16-alpine
+    container_name: n5study-banco
+    environment:
+      POSTGRES_DB: n5study
+      POSTGRES_USER: n5study
+      POSTGRES_PASSWORD: n5study
+    ports:
+      - "5432:5432"
+    volumes:
+      - dados-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U n5study -d n5study"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: ./backend
+    container_name: n5study-api
+    depends_on:
+      banco:
+        condition: service_healthy
+    environment:
+      BANCO_URL: jdbc:postgresql://banco:5432/n5study
+      BANCO_USUARIO: n5study
+      BANCO_SENHA: n5study
+      ADMIN_NOME_USUARIO: admin
+      ADMIN_SENHA: admin123
+      CORS_ORIGENS_PERMITIDAS: http://localhost:5173,http://localhost:5174
+    ports:
+      - "8080:8080"
+
+volumes:
+  dados-postgres:

@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Build do backend
+backend/target
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

@@ -1,0 +1,30 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1
+
+spring:
+  application:
+    name: n5-study-api
+  datasource:
+    url: ${BANCO_URL:jdbc:postgresql://localhost:5432/n5study}
+    username: ${BANCO_USUARIO:n5study}
+    password: ${BANCO_SENHA:n5study}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+
+n5study:
+  jwt:
+    segredo: ${JWT_SEGREDO:segredo-de-desenvolvimento-n5study-troque-em-producao-1234567890}
+    expiracao-em-segundos: ${JWT_EXPIRACAO_SEGUNDOS:86400}
+  admin:
+    nome-usuario: ${ADMIN_NOME_USUARIO:admin}
+    senha: ${ADMIN_SENHA:admin123}
+  cors:
+    origens-permitidas: ${CORS_ORIGENS_PERMITIDAS:http://localhost:5173,http://localhost:5174}
+
+logging:
+  level:
+    br.com.n5study: INFO
