@@ -46,21 +46,24 @@ n5-study/
 │   ├── src/main/resources/
 │   │   └── application.yml
 │   └── Dockerfile
+│   ├── docker-compose.yml          # PostgreSQL + API
 │   └── Dockerfile
-├── src/                            # Aplicação React
-│   ├── components/                  # Componentes de UI reutilizáveis
-│   ├── contexts/                    # Contexto de autenticação
-│   ├── services/                    # Cliente HTTP e chamadas de autenticação
-│   ├── modules/                     # Telas da aplicação
-│   │   ├── Home/
-│   │   ├── Login/
-│   │   ├── Flashcards/
-│   │   └── Study/
-│   ├── styles/                      # Paleta de cores e estilos globais
-│   ├── App.tsx                      # Rotas e proteção de acesso
-│   └── main.tsx
-├── public/
-└── docker-compose.yml
+├── frontend/                      # Aplicação React
+│   ├── src/
+│   │   ├── components/             # Componentes de UI reutilizáveis
+│   │   ├── contexts/               # Contexto de autenticação
+│   │   ├── services/               # Cliente HTTP e chamadas de autenticação
+│   │   ├── modules/                # Telas da aplicação
+│   │   │   ├── Home/
+│   │   │   ├── Login/
+│   │   │   ├── Flashcards/
+│   │   │   └── Study/
+│   │   ├── styles/                 # Paleta de cores e estilos globais
+│   │   ├── App.tsx                 # Rotas e proteção de acesso
+│   │   └── main.tsx
+│   ├── public/
+│   └── index.html
+└── README.md
 ```
 
 | Camada | Responsabilidade |
@@ -71,8 +74,8 @@ n5-study/
 | `entity/` | Entidades e modelos de dados |
 | `dto/` | Objetos de entrada e saída da API |
 | `seguranca/` | Geração e validação de token, filtro de autenticação |
-| `src/services/` | Cliente HTTP do frontend e chamadas de autenticação |
-| `src/contexts/` | Estado global de sessão do usuário |
+| `frontend/src/services/` | Cliente HTTP do frontend e chamadas de autenticação |
+| `frontend/src/contexts/` | Estado global de sessão do usuário |
 
 ---
 
@@ -85,14 +88,15 @@ n5-study/
 
 ### Banco de dados e API
 
-O PostgreSQL e a API sobem juntos pelo Docker Compose, a partir da raiz do projeto:
+O PostgreSQL e a API sobem juntos pelo Docker Compose, a partir da pasta `backend`:
 
 ```bash
+cd backend
 docker compose up -d --build
 ```
 
 A API fica disponível em `http://localhost:8080/api/v1` e o banco na porta `5432`.
-Para parar tudo:
+Para parar tudo, ainda dentro de `backend`:
 
 ```bash
 docker compose down
@@ -100,7 +104,10 @@ docker compose down
 
 ### Frontend
 
+A partir da pasta `frontend`:
+
 ```bash
+cd frontend
 npm install
 npm run dev
 ```
@@ -184,7 +191,7 @@ Sugestões de funcionalidades que podem agregar valor ao projeto:
 
 ## Créditos
 
-As ilustrações do quiz de imagens (`public/illustrations/`) são do projeto
+As ilustrações do quiz de imagens (`frontend/public/illustrations/`) são do projeto
 [Fluent Emoji](https://github.com/microsoft/fluentui-emoji) da Microsoft, no estilo Flat,
 distribuídas sob a licença MIT. O texto completo da licença está em
-`public/illustrations/LICENSE.txt`.
+`frontend/public/illustrations/LICENSE.txt`.
