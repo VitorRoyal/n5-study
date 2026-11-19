@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../../components/Navbar";
 import { Card } from "../../components/Card";
+import { LogoutButton } from "../../components/LogoutButton";
 import { PageWrapper, ContentArea, Title, Subtitle } from "../../styles/GlobalStyles";
 import { CardsRow, Eyebrow } from "./style";
 
@@ -9,7 +10,7 @@ export function Home() {
 
   return (
     <PageWrapper>
-      <Navbar title="N5 Study" />
+      <Navbar title="N5 Study" right={<LogoutButton />} />
       <ContentArea>
         <Eyebrow>Preparação JLPT</Eyebrow>
         <Title>Escolha como quer estudar hoje</Title>
