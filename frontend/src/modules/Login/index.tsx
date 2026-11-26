@@ -1,135 +1,135 @@
 import { useState, type FormEvent } from "react";
 import { Navigate } from "react-router-dom";
-import { Title, Subtitle } from "../../styles/GlobalStyles";
-import { useAuth } from "../../contexts/authContext";
-import { ApiError } from "../../services/api";
+import { Titulo, Subtitulo } from "../../styles/GlobalStyles";
+import { useAutenticacao } from "../../contexts/contextoAutenticacao";
+import { ErroApi } from "../../services/api";
 import {
-  LoginLayout,
-  BrandPanel,
-  BrandStamp,
-  BrandName,
-  FormPanel,
-  FormContent,
-  FormHeader,
-  LoginForm,
-  FieldLabel,
-  TextField,
-  SubmitButton,
-  ToggleModeButton,
-  ErrorMessage,
-  FooterNote,
+  LayoutLogin,
+  PainelMarca,
+  SeloMarca,
+  NomeMarca,
+  PainelFormulario,
+  ConteudoFormulario,
+  CabecalhoFormulario,
+  FormularioLogin,
+  RotuloCampo,
+  CampoTexto,
+  BotaoEnviar,
+  BotaoAlternarModo,
+  MensagemErro,
+  NotaRodape,
 } from "./style";
 
-type FormMode = "login" | "register";
+type ModoFormulario = "login" | "registrar";
 
-function resolveErrorMessage(error: unknown) {
-  if (error instanceof ApiError) {
-    if (error.details.length > 0) {
-      return error.details.join(" ");
+function resolverMensagemErro(erro: unknown) {
+  if (erro instanceof ErroApi) {
+    if (erro.detalhes.length > 0) {
+      return erro.detalhes.join(" ");
     }
-    return error.message;
+    return erro.message;
   }
 
   return "Algo deu errado. Tente novamente.";
 }
 
 export function Login() {
-  const { user, signIn, signUp } = useAuth();
-  const [mode, setMode] = useState<FormMode>("login");
-  const [nomeUsuario, setNomeUsuario] = useState("");
-  const [senha, setSenha] = useState("");
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { usuario, entrar, cadastrar } = useAutenticacao();
+  const [modo, definirModo] = useState<ModoFormulario>("login");
+  const [nomeUsuario, definirNomeUsuario] = useState("");
+  const [senha, definirSenha] = useState("");
+  const [mensagemErro, definirMensagemErro] = useState<string | null>(null);
+  const [enviando, definirEnviando] = useState(false);
 
-  if (user !== null) {
+  if (usuario !== null) {
     return <Navigate to="/" replace />;
   }
 
-  function toggleMode() {
-    setErrorMessage(null);
-    if (mode === "login") {
-      setMode("register");
+  function alternarModo() {
+    definirMensagemErro(null);
+    if (modo === "login") {
+      definirModo("registrar");
       return;
     }
-    setMode("login");
+    definirModo("login");
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setErrorMessage(null);
-    setIsSubmitting(true);
+  async function tratarEnvio(evento: FormEvent<HTMLFormElement>) {
+    evento.preventDefault();
+    definirMensagemErro(null);
+    definirEnviando(true);
 
     try {
-      if (mode === "login") {
-        await signIn(nomeUsuario, senha);
+      if (modo === "login") {
+        await entrar(nomeUsuario, senha);
       } else {
-        await signUp(nomeUsuario, senha);
+        await cadastrar(nomeUsuario, senha);
       }
-    } catch (error) {
-      setErrorMessage(resolveErrorMessage(error));
+    } catch (erro) {
+      definirMensagemErro(resolverMensagemErro(erro));
     } finally {
-      setIsSubmitting(false);
+      definirEnviando(false);
     }
   }
 
   return (
-    <LoginLayout>
-      <BrandPanel>
-        <BrandStamp>字</BrandStamp>
-        <BrandName>Nihon GO</BrandName>
-      </BrandPanel>
+    <LayoutLogin>
+      <PainelMarca>
+        <SeloMarca>字</SeloMarca>
+        <NomeMarca>Nihon GO</NomeMarca>
+      </PainelMarca>
 
-      <FormPanel>
-        <FormContent>
-          <FormHeader>
-            <Title as="h2">{mode === "login" ? "Entrar" : "Criar conta"}</Title>
-            <Subtitle>
-              {mode === "login"
+      <PainelFormulario>
+        <ConteudoFormulario>
+          <CabecalhoFormulario>
+            <Titulo as="h2">{modo === "login" ? "Entrar" : "Criar conta"}</Titulo>
+            <Subtitulo>
+              {modo === "login"
                 ? "Entre para continuar seus estudos."
                 : "Crie sua conta para comecar a estudar."}
-            </Subtitle>
-          </FormHeader>
+            </Subtitulo>
+          </CabecalhoFormulario>
 
-          <LoginForm onSubmit={handleSubmit}>
-            <FieldLabel>
+          <FormularioLogin onSubmit={tratarEnvio}>
+            <RotuloCampo>
               Usuario
-              <TextField
+              <CampoTexto
                 type="text"
                 value={nomeUsuario}
-                onChange={(event) => setNomeUsuario(event.target.value)}
+                onChange={(evento) => definirNomeUsuario(evento.target.value)}
                 autoComplete="username"
                 spellCheck={false}
                 required
               />
-            </FieldLabel>
+            </RotuloCampo>
 
-            <FieldLabel>
+            <RotuloCampo>
               Senha
-              <TextField
+              <CampoTexto
                 type="password"
                 value={senha}
-                onChange={(event) => setSenha(event.target.value)}
-                autoComplete={mode === "login" ? "current-password" : "new-password"}
+                onChange={(evento) => definirSenha(evento.target.value)}
+                autoComplete={modo === "login" ? "current-password" : "new-password"}
                 required
               />
-            </FieldLabel>
+            </RotuloCampo>
 
-            {errorMessage !== null && <ErrorMessage>{errorMessage}</ErrorMessage>}
+            {mensagemErro !== null && <MensagemErro>{mensagemErro}</MensagemErro>}
 
-            <SubmitButton type="submit" disabled={isSubmitting}>
-              {mode === "login" ? "Entrar" : "Criar conta"}
-            </SubmitButton>
-          </LoginForm>
+            <BotaoEnviar type="submit" disabled={enviando}>
+              {modo === "login" ? "Entrar" : "Criar conta"}
+            </BotaoEnviar>
+          </FormularioLogin>
 
-          <ToggleModeButton type="button" onClick={toggleMode}>
-            {mode === "login"
+          <BotaoAlternarModo type="button" onClick={alternarModo}>
+            {modo === "login"
               ? "Ainda nao tem conta? Cadastre-se"
               : "Ja tem conta? Voltar para o login"}
-          </ToggleModeButton>
+          </BotaoAlternarModo>
 
-          <FooterNote>Conta inicial de administrador: admin</FooterNote>
-        </FormContent>
-      </FormPanel>
-    </LoginLayout>
+          <NotaRodape>Conta inicial de administrador: admin</NotaRodape>
+        </ConteudoFormulario>
+      </PainelFormulario>
+    </LayoutLogin>
   );
 }

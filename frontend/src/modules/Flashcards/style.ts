@@ -1,71 +1,42 @@
 import styled, { css } from "styled-components";
 import { colors } from "../../styles/colors";
 
-export const TabButton = styled.button<{ $active: boolean }>`
-  border: none;
-  background: none;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 8px 14px;
-  cursor: pointer;
-  color: ${colors.inkSoft};
-  border-bottom: 2px solid transparent;
-  transition: color 0.15s ease, border-color 0.15s ease;
-
-  ${({ $active }) =>
-    $active &&
-    css`
-      color: ${colors.indigo};
-      border-bottom-color: ${colors.sealRed};
-      font-weight: 700;
-    `}
-
-  &:hover {
-    color: ${colors.indigo};
-  }
-
-  &:focus-visible {
-    outline: 2px solid ${colors.sealRed};
-    outline-offset: 2px;
-  }
-`;
-
-export const QuizWrapper = styled.div`
+export const ContainerQuiz = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 60vh;
 `;
 
-export const QuizGrid = styled.div`
+export const GradeQuiz = styled.div`
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: center;
   gap: 28px;
 `;
 
-export const ScoreCounter = styled.div`
-  position: fixed;
-  left: 24px;
+export const ContadorAcertos = styled.div`
+  position: sticky;
   bottom: 24px;
-  background-color: ${colors.surface};
-  border: 2px solid ${colors.lineStrong};
+  width: fit-content;
+  background-color: ${colors.superficie};
+  border: 2px solid ${colors.linhaForte};
   border-radius: 999px;
   padding: 10px 20px;
   font-size: 14px;
   font-weight: 600;
-  color: ${colors.ink};
+  color: ${colors.tinta};
 `;
 
-export const QuizSlot = styled.div`
+export const SlotQuiz = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
 `;
 
-export const FlashCardShell = styled.button`
+export const CascaCartao = styled.button`
   all: unset;
   display: block;
   width: 200px;
@@ -79,31 +50,31 @@ export const FlashCardShell = styled.button`
   }
 
   &:focus-visible {
-    outline: 2px solid ${colors.sealRed};
+    outline: 2px solid ${colors.vermelhoSelo};
     outline-offset: 4px;
   }
 `;
 
-export const FlashCardFlipper = styled.div<{ $flipped: boolean }>`
+export const GiradorCartao = styled.div<{ $virada: boolean }>`
   position: relative;
   width: 100%;
   height: 100%;
   transition: transform 0.6s ease;
   transform-style: preserve-3d;
 
-  ${({ $flipped }) =>
-    $flipped &&
+  ${({ $virada }) =>
+    $virada &&
     css`
       transform: rotateY(180deg);
     `}
 `;
 
-export const FlashCardFace = styled.div`
+export const FaceCartao = styled.div`
   position: absolute;
   inset: 0;
   backface-visibility: hidden;
-  background-color: ${colors.surface};
-  border: 3px solid ${colors.lineStrong};
+  background-color: ${colors.superficie};
+  border: 3px solid ${colors.linhaForte};
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -113,36 +84,36 @@ export const FlashCardFace = styled.div`
   padding: 20px;
 `;
 
-export const FlashCardFaceBack = styled(FlashCardFace)`
+export const VersoCartao = styled(FaceCartao)`
   transform: rotateY(180deg);
 `;
 
-export const FlashCardCharacter = styled.span`
+export const CaractereCartao = styled.span`
   font-family: "Shippori Mincho", serif;
   font-size: 48px;
-  color: ${colors.ink};
+  color: ${colors.tinta};
 `;
 
-export const FlashCardReading = styled.span`
+export const LeituraCartao = styled.span`
   font-size: 16px;
   color: ${colors.indigo};
   font-weight: 500;
 `;
 
-export const FlashCardMeaning = styled.span`
+export const SignificadoCartao = styled.span`
   font-size: 13px;
-  color: ${colors.inkSoft};
+  color: ${colors.tintaSuave};
   text-align: center;
 `;
 
-export const FlashCardInput = styled.input`
+export const CampoRespostaCartao = styled.input`
   width: 100%;
-  border: 2px solid ${colors.lineStrong};
+  border: 2px solid ${colors.linhaForte};
   border-radius: 999px;
   padding: 10px 16px;
   font-size: 14px;
   text-align: center;
-  color: ${colors.ink};
+  color: ${colors.tinta};
   background-color: ${colors.washi};
   transition: border-color 0.15s ease;
 
@@ -152,9 +123,9 @@ export const FlashCardInput = styled.input`
   }
 `;
 
-export type ImageOptionState = "idle" | "correct" | "wrong" | "muted";
+export type EstadoOpcaoImagem = "ocioso" | "correto" | "errado" | "esmaecido";
 
-export const ImageQuizWrapper = styled.div`
+export const ContainerQuizImagem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -162,15 +133,15 @@ export const ImageQuizWrapper = styled.div`
   margin-top: 24px;
 `;
 
-export const ImageQuizProgress = styled.span`
+export const ProgressoQuizImagem = styled.span`
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: ${colors.inkSoft};
+  color: ${colors.tintaSuave};
 `;
 
-export const QuizHeaderRow = styled.div`
+export const LinhaCabecalhoQuiz = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
@@ -178,23 +149,23 @@ export const QuizHeaderRow = styled.div`
   gap: 16px;
 `;
 
-export const QuizLengthRow = styled.label`
+export const LinhaTamanhoQuiz = styled.label`
   display: flex;
   flex-shrink: 0;
   align-items: center;
   gap: 10px;
   font-size: 13px;
   font-weight: 600;
-  color: ${colors.inkSoft};
+  color: ${colors.tintaSuave};
 `;
 
-export const QuizLengthSelect = styled.select`
+export const SeletorTamanhoQuiz = styled.select`
   font-family: "Zen Kaku Gothic New", sans-serif;
   font-size: 14px;
   font-weight: 600;
-  color: ${colors.ink};
-  background-color: ${colors.surface};
-  border: 2px solid ${colors.lineStrong};
+  color: ${colors.tinta};
+  background-color: ${colors.superficie};
+  border: 2px solid ${colors.linhaForte};
   border-radius: 999px;
   padding: 8px 16px;
   cursor: pointer;
@@ -205,24 +176,24 @@ export const QuizLengthSelect = styled.select`
   }
 
   &:focus-visible {
-    outline: 2px solid ${colors.sealRed};
+    outline: 2px solid ${colors.vermelhoSelo};
     outline-offset: 2px;
   }
 `;
 
-export const ImageCardShell = styled.div`
+export const CascaCartaoImagem = styled.div`
   width: 320px;
   height: 300px;
   perspective: 1200px;
 `;
 
-export const Illustration = styled.img`
+export const Ilustracao = styled.img`
   width: 220px;
   height: 220px;
   object-fit: contain;
 `;
 
-export const ImageOptionsColumn = styled.div`
+export const ColunaOpcoesImagem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -230,9 +201,9 @@ export const ImageOptionsColumn = styled.div`
   width: 320px;
 `;
 
-export const ImageOptionButton = styled.button<{ $state: ImageOptionState }>`
-  background-color: ${colors.surface};
-  border: 3px solid ${colors.lineStrong};
+export const BotaoOpcaoImagem = styled.button<{ $estado: EstadoOpcaoImagem }>`
+  background-color: ${colors.superficie};
+  border: 3px solid ${colors.linhaForte};
   border-radius: 999px;
   padding: 12px 20px;
   cursor: pointer;
@@ -248,25 +219,25 @@ export const ImageOptionButton = styled.button<{ $state: ImageOptionState }>`
   }
 
   &:focus-visible {
-    outline: 2px solid ${colors.sealRed};
+    outline: 2px solid ${colors.vermelhoSelo};
     outline-offset: 2px;
   }
 
-  ${({ $state }) =>
-    $state === "correct" &&
+  ${({ $estado }) =>
+    $estado === "correto" &&
     css`
       border-color: ${colors.jade};
-      background-color: ${colors.surface};
+      background-color: ${colors.superficie};
     `}
 
-  ${({ $state }) =>
-    $state === "wrong" &&
+  ${({ $estado }) =>
+    $estado === "errado" &&
     css`
-      border-color: ${colors.sealRed};
+      border-color: ${colors.vermelhoSelo};
     `}
 
-  ${({ $state }) =>
-    $state === "muted" &&
+  ${({ $estado }) =>
+    $estado === "esmaecido" &&
     css`
       opacity: 0.45;
     `}
@@ -276,40 +247,40 @@ export const ImageOptionButton = styled.button<{ $state: ImageOptionState }>`
   }
 `;
 
-export const ImageOptionKana = styled.span`
+export const KanaOpcaoImagem = styled.span`
   font-family: "Shippori Mincho", serif;
   font-size: 24px;
-  color: ${colors.ink};
+  color: ${colors.tinta};
 `;
 
-export const ImageOptionRomaji = styled.span`
+export const RomajiOpcaoImagem = styled.span`
   font-size: 14px;
-  color: ${colors.inkSoft};
+  color: ${colors.tintaSuave};
 `;
 
-export const RevealTitle = styled.strong<{ $correct: boolean }>`
+export const TituloRevelacao = styled.strong<{ $correto: boolean }>`
   font-size: 16px;
-  color: ${({ $correct }) => ($correct ? colors.jade : colors.sealRed)};
+  color: ${({ $correto }) => ($correto ? colors.jade : colors.vermelhoSelo)};
 `;
 
-export const RevealText = styled.span`
+export const TextoRevelacao = styled.span`
   font-size: 14px;
-  color: ${colors.inkSoft};
+  color: ${colors.tintaSuave};
   text-align: center;
   line-height: 1.5;
 `;
 
-export const RevealHighlight = styled.span`
+export const DestaqueRevelacao = styled.span`
   font-size: 14px;
   color: ${colors.jade};
   font-weight: 600;
   text-align: center;
 `;
 
-export const NextQuestionButton = styled.button`
+export const BotaoProximaPergunta = styled.button`
   border: 2px solid ${colors.indigo};
   background-color: ${colors.indigo};
-  color: ${colors.surface};
+  color: ${colors.superficie};
   font-size: 14px;
   font-weight: 600;
   padding: 12px 28px;
@@ -318,28 +289,28 @@ export const NextQuestionButton = styled.button`
   transition: background-color 0.15s ease, border-color 0.15s ease;
 
   &:hover {
-    background-color: ${colors.indigoSoft};
-    border-color: ${colors.indigoSoft};
+    background-color: ${colors.indigoSuave};
+    border-color: ${colors.indigoSuave};
   }
 
   &:focus-visible {
-    outline: 2px solid ${colors.sealRed};
+    outline: 2px solid ${colors.vermelhoSelo};
     outline-offset: 2px;
   }
 `;
 
-export const ImageResultCard = styled.div`
+export const CartaoResultadoImagem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  background-color: ${colors.surface};
-  border: 3px solid ${colors.lineStrong};
+  background-color: ${colors.superficie};
+  border: 3px solid ${colors.linhaForte};
   border-radius: 20px;
   padding: 40px 48px;
 `;
 
-export const ImageResultScore = styled.strong`
+export const PontuacaoResultadoImagem = styled.strong`
   font-family: "Shippori Mincho", serif;
   font-size: 44px;
   color: ${colors.indigo};

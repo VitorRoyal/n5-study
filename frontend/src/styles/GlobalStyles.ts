@@ -15,14 +15,14 @@ export const GlobalStyles = createGlobalStyle`
 
   body {
     background-color: ${colors.washi};
-    color: ${colors.ink};
+    color: ${colors.tinta};
     font-family: "Zen Kaku Gothic New", sans-serif;
     -webkit-font-smoothing: antialiased;
   }
 
   h1, h2, h3 {
     font-family: "Shippori Mincho", serif;
-    color: ${colors.ink};
+    color: ${colors.tinta};
   }
 
   a {
@@ -35,34 +35,26 @@ export const GlobalStyles = createGlobalStyle`
   }
 `;
 
-export const PageWrapper = styled.div`
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: ${colors.washi};
+export const AreaConteudo = styled.main`
+  padding: 40px 44px 56px;
 `;
 
-export const ContentArea = styled.main`
-  flex: 1;
-  padding: 48px 40px;
-`;
-
-export const Title = styled.h1`
+export const Titulo = styled.h1`
   font-size: 28px;
   font-weight: 700;
   letter-spacing: 0.02em;
 `;
 
-export const Subtitle = styled.p`
+export const Subtitulo = styled.p`
   font-size: 15px;
-  color: ${colors.inkSoft};
+  color: ${colors.tintaSuave};
   margin-top: 8px;
 `;
 
-export const PrimaryButton = styled.button`
+export const BotaoPrimario = styled.button`
   border: 1px solid ${colors.indigo};
   background-color: ${colors.indigo};
-  color: ${colors.surface};
+  color: ${colors.superficie};
   font-size: 14px;
   font-weight: 500;
   padding: 10px 20px;
@@ -71,20 +63,20 @@ export const PrimaryButton = styled.button`
   transition: background-color 0.15s ease, color 0.15s ease;
 
   &:hover {
-    background-color: ${colors.indigoSoft};
-    border-color: ${colors.indigoSoft};
+    background-color: ${colors.indigoSuave};
+    border-color: ${colors.indigoSuave};
   }
 
   &:focus-visible {
-    outline: 2px solid ${colors.sealRed};
+    outline: 2px solid ${colors.vermelhoSelo};
     outline-offset: 2px;
   }
 `;
 
-export const SecondaryButton = styled.button`
-  border: 1px solid ${colors.lineStrong};
+export const BotaoSecundario = styled.button`
+  border: 1px solid ${colors.linhaForte};
   background-color: transparent;
-  color: ${colors.ink};
+  color: ${colors.tinta};
   font-size: 14px;
   font-weight: 500;
   padding: 10px 20px;
@@ -98,7 +90,7 @@ export const SecondaryButton = styled.button`
   }
 
   &:focus-visible {
-    outline: 2px solid ${colors.sealRed};
+    outline: 2px solid ${colors.vermelhoSelo};
     outline-offset: 2px;
   }
 `;

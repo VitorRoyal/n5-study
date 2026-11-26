@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { colors } from "../../styles/colors";
-import { PrimaryButton } from "../../styles/GlobalStyles";
+import { BotaoPrimario } from "../../styles/GlobalStyles";
 
-export const LoginLayout = styled.div`
+export const LayoutLogin = styled.div`
   min-height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -12,9 +12,9 @@ export const LoginLayout = styled.div`
   }
 `;
 
-export const BrandPanel = styled.aside`
+export const PainelMarca = styled.aside`
   background-color: ${colors.washiDark};
-  border-right: 3px solid ${colors.lineStrong};
+  border-right: 3px solid ${colors.linhaForte};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,18 +24,18 @@ export const BrandPanel = styled.aside`
 
   @media (max-width: 900px) {
     border-right: none;
-    border-bottom: 3px solid ${colors.lineStrong};
+    border-bottom: 3px solid ${colors.linhaForte};
     gap: 20px;
     padding: 40px 24px;
   }
 `;
 
-export const BrandStamp = styled.span`
+export const SeloMarca = styled.span`
   width: 104px;
   height: 104px;
-  border: 3px solid ${colors.sealRed};
+  border: 3px solid ${colors.vermelhoSelo};
   border-radius: 50%;
-  color: ${colors.sealRed};
+  color: ${colors.vermelhoSelo};
   font-family: "Shippori Mincho", serif;
   font-size: 46px;
   display: flex;
@@ -49,12 +49,12 @@ export const BrandStamp = styled.span`
   }
 `;
 
-export const BrandName = styled.h1`
+export const NomeMarca = styled.h1`
   font-family: "Shippori Mincho", serif;
   font-size: 44px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  color: ${colors.ink};
+  color: ${colors.tinta};
   text-align: center;
 
   @media (max-width: 900px) {
@@ -62,15 +62,15 @@ export const BrandName = styled.h1`
   }
 `;
 
-export const FormPanel = styled.main`
-  background-color: ${colors.surface};
+export const PainelFormulario = styled.main`
+  background-color: ${colors.superficie};
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 48px 32px;
 `;
 
-export const FormContent = styled.div`
+export const ConteudoFormulario = styled.div`
   width: 100%;
   max-width: 360px;
   display: flex;
@@ -78,32 +78,32 @@ export const FormContent = styled.div`
   gap: 24px;
 `;
 
-export const FormHeader = styled.div`
+export const CabecalhoFormulario = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-export const LoginForm = styled.form`
+export const FormularioLogin = styled.form`
   display: flex;
   flex-direction: column;
   gap: 16px;
 `;
 
-export const FieldLabel = styled.label`
+export const RotuloCampo = styled.label`
   display: flex;
   flex-direction: column;
   gap: 6px;
   font-size: 13px;
   font-weight: 600;
-  color: ${colors.inkSoft};
+  color: ${colors.tintaSuave};
 `;
 
-export const TextField = styled.input`
+export const CampoTexto = styled.input`
   font-family: "Zen Kaku Gothic New", sans-serif;
   font-size: 15px;
-  color: ${colors.ink};
+  color: ${colors.tinta};
   background-color: ${colors.washi};
-  border: 2px solid ${colors.lineStrong};
+  border: 2px solid ${colors.linhaForte};
   border-radius: 999px;
   padding: 11px 18px;
   transition: border-color 0.15s ease;
@@ -114,7 +114,7 @@ export const TextField = styled.input`
   }
 `;
 
-export const SubmitButton = styled(PrimaryButton)`
+export const BotaoEnviar = styled(BotaoPrimario)`
   border-radius: 999px;
   padding: 12px 24px;
   font-size: 15px;
@@ -122,12 +122,12 @@ export const SubmitButton = styled(PrimaryButton)`
   &:disabled {
     cursor: default;
     opacity: 0.5;
-    background-color: ${colors.lineStrong};
-    border-color: ${colors.lineStrong};
+    background-color: ${colors.linhaForte};
+    border-color: ${colors.linhaForte};
   }
 `;
 
-export const ToggleModeButton = styled.button`
+export const BotaoAlternarModo = styled.button`
   align-self: flex-start;
   border: none;
   background: none;
@@ -138,27 +138,27 @@ export const ToggleModeButton = styled.button`
   padding: 4px 0;
 
   &:hover {
-    color: ${colors.sealRed};
+    color: ${colors.vermelhoSelo};
   }
 
   &:focus-visible {
-    outline: 2px solid ${colors.sealRed};
+    outline: 2px solid ${colors.vermelhoSelo};
     outline-offset: 2px;
   }
 `;
 
-export const ErrorMessage = styled.p`
-  border-left: 4px solid ${colors.sealRed};
+export const MensagemErro = styled.p`
+  border-left: 4px solid ${colors.vermelhoSelo};
   background-color: ${colors.washi};
   border-radius: 8px;
   padding: 12px 16px;
   font-size: 13px;
   line-height: 1.5;
-  color: ${colors.sealRed};
+  color: ${colors.vermelhoSelo};
 `;
 
-export const FooterNote = styled.p`
+export const NotaRodape = styled.p`
   font-size: 12px;
-  color: ${colors.inkSoft};
+  color: ${colors.tintaSuave};
   line-height: 1.5;
 `;

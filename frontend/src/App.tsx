@@ -1,45 +1,39 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import { GlobalStyles } from "./styles/GlobalStyles";
-import { AuthProvider } from "./contexts/AuthProvider";
-import { ProtectedRoute } from "./components/ProtectedRoute";
-import { Home } from "./modules/Home";
+import { ProvedorAutenticacao } from "./contexts/ProvedorAutenticacao";
+import { RotaProtegida } from "./components/RotaProtegida";
+import { LayoutPrincipal } from "./components/LayoutPrincipal";
+import { Inicio } from "./modules/Inicio";
 import { Flashcards } from "./modules/Flashcards";
-import { Study } from "./modules/Study";
+import { Frases } from "./modules/Frases";
 import { Login } from "./modules/Login";
 
 function App() {
   return (
     <BrowserRouter>
       <GlobalStyles />
-      <AuthProvider>
+      <ProvedorAutenticacao>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route
-            path="/"
             element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
+              <RotaProtegida>
+                <LayoutPrincipal />
+              </RotaProtegida>
             }
-          />
-          <Route
-            path="/flashcards"
-            element={
-              <ProtectedRoute>
-                <Flashcards />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/study"
-            element={
-              <ProtectedRoute>
-                <Study />
-              </ProtectedRoute>
-            }
-          />
+          >
+            <Route path="/" element={<Inicio />} />
+            <Route path="/flashcards" element={<Navigate to="/flashcards/hiragana" replace />} />
+            <Route path="/flashcards/hiragana" element={<Flashcards aba="hiragana" />} />
+            <Route path="/flashcards/katakana" element={<Flashcards aba="katakana" />} />
+            <Route path="/flashcards/kanji" element={<Flashcards aba="kanji" />} />
+            <Route path="/flashcards/imagens" element={<Flashcards aba="imagens" />} />
+            <Route path="/frases" element={<Frases />} />
+            <Route path="/study" element={<Navigate to="/frases" replace />} />
+          </Route>
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </AuthProvider>
+      </ProvedorAutenticacao>
     </BrowserRouter>
   );
 }
