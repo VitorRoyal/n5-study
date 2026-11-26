@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Esboço C — Selos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --washi:#F6F1E6; --washi-dark:#EDE5D3; --surface:#FFFDF8;
+  --ink:#221F1C; --ink-soft:#4A453D;
+  --indigo:#2B3A67; --indigo-soft:#4C5C95;
+  --seal:#B23A2E; --seal-soft:#D2685C;
+  --jade:#3F7D5A; --jade-soft:#6FA98A;
+  --line:#DCD4C0; --line-strong:#C9BFA5; --gold:#B58A3D;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--washi);color:var(--ink);font-family:"Zen Kaku Gothic New",sans-serif;-webkit-font-smoothing:antialiased}
+.tag{position:fixed;top:10px;right:14px;background:var(--ink);color:var(--surface);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:5px 11px;border-radius:999px;z-index:9}
+.app{display:grid;grid-template-columns:214px 1fr;min-height:100vh}
+
+/* sidebar enxuta, sem caixa branca */
+.side{background:var(--washi-dark);border-right:1px solid var(--line-strong);padding:26px 0;display:flex;flex-direction:column;gap:26px}
+.brand{display:flex;flex-direction:column;align-items:center;gap:9px;padding:0 18px 4px}
+.stamp{width:46px;height:46px;border:2px solid var(--seal);border-radius:50%;color:var(--seal);font-family:"Shippori Mincho",serif;font-size:21px;display:flex;align-items:center;justify-content:center}
+.brand b{font-family:"Shippori Mincho",serif;font-size:17px;letter-spacing:.04em}
+.group{display:flex;flex-direction:column;gap:1px}
+.group h4{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--line-strong);font-weight:700;padding:0 22px 8px}
+.nav{padding:8px 22px;font-size:14px;color:var(--ink-soft);cursor:pointer;display:flex;align-items:center;gap:9px}
+.nav:hover{color:var(--indigo)}
+.nav.on{color:var(--ink);font-weight:700}
+.nav.on::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--seal);flex:none;margin-left:-14px;margin-right:4px}
+.caret{margin-left:auto;font-size:10px;color:var(--line-strong)}
+.sub{display:flex;flex-direction:column}
+.sub a{font-size:13px;color:var(--ink-soft);text-decoration:none;padding:6px 22px 6px 36px}
+.sub a:hover{color:var(--indigo)}
+.soon{margin-left:auto;font-size:9px;color:var(--line-strong);letter-spacing:.06em}
+.subrow{display:flex;align-items:center;padding-right:18px}
+.subrow a{flex:1}
+
+/* coluna central estreita, tipo carta */
+.main{display:flex;justify-content:center;padding:52px 32px 64px;overflow:auto}
+.col{width:100%;max-width:620px}
+.hello{font-family:"Shippori Mincho",serif;font-size:36px;font-weight:700;text-align:center}
+.lead{color:var(--ink-soft);margin-top:9px;font-size:15px;text-align:center}
+.rule{height:1px;background:var(--line-strong);margin:30px 0;position:relative}
+.rule::after{content:"・";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--washi);color:var(--line-strong);padding:0 10px}
+
+/* metricas como selos */
+.seals{display:flex;justify-content:center;gap:30px;flex-wrap:wrap}
+.seal{text-align:center;width:112px}
+.ring{width:84px;height:84px;border-radius:50%;border:2px solid var(--line-strong);display:flex;align-items:center;justify-content:center;font-family:"Shippori Mincho",serif;font-size:27px;margin:0 auto 9px;background:var(--surface)}
+.seal.ok .ring{border-color:var(--jade);color:var(--jade)}
+.seal.no .ring{border-color:var(--seal);color:var(--seal)}
+.seal.nx .ring{border-color:var(--indigo);color:var(--indigo)}
+.seal.sq .ring{border-color:var(--gold);color:var(--gold)}
+.seal span{font-size:12px;color:var(--ink-soft);line-height:1.35;display:block}
+
+.k{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);text-align:center}
+.card{background:var(--surface);border:1px solid var(--line-strong);border-radius:4px;padding:26px 28px;margin-top:14px;display:flex;align-items:center;gap:20px}
+.card .g{font-family:"Shippori Mincho",serif;font-size:46px;color:var(--ink);flex:none}
+.card .t{font-family:"Shippori Mincho",serif;font-size:20px}
+.card .s{font-size:13px;color:var(--ink-soft);margin-top:4px}
+.bar{height:3px;background:var(--washi-dark);margin-top:12px;overflow:hidden;max-width:260px}
+.bar i{display:block;height:100%;width:42%;background:var(--seal)}
+.go{margin-left:auto;background:none;border:1px solid var(--ink);color:var(--ink);border-radius:999px;padding:10px 24px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;flex:none}
+.go:hover{background:var(--ink);color:var(--surface)}
+
+.meds{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin-top:14px}
+.med{text-align:center;width:104px}
+.mring{width:62px;height:62px;border-radius:50%;border:2px solid var(--gold);color:var(--gold);font-family:"Shippori Mincho",serif;font-size:21px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;background:var(--surface)}
+.med.lock .mring{border-color:var(--line-strong);color:var(--line-strong);border-style:dashed}
+.med.lock{opacity:.55}
+.med b{font-size:12px;display:block}
+.med span{font-size:10px;color:var(--ink-soft);display:block;margin-top:2px;line-height:1.35}
+</style>
+</head>
+<body>
+<div class="tag">Esboço C — Selos</div>
+<div class="app">
+
+  <aside class="side">
+    <div class="brand"><div class="stamp">字</div><b>Nihon GO</b></div>
+    <div class="group">
+      <h4>Estudar</h4>
+      <div class="nav on">Início</div>
+      <div class="nav">Flashcards <span class="caret">&#9662;</span></div>
+      <div class="sub"><a>Hiragana</a><a>Katakana</a><a>Kanji</a><a>Palavras com imagem</a></div>
+      <div class="nav">Provas <span class="caret">&#9662;</span></div>
+      <div class="sub">
+        <div class="subrow"><a>JLPT N5</a><span class="soon">em breve</span></div>
+        <div class="subrow"><a>JLPT N4</a><span class="soon">em breve</span></div>
+      </div>
+      <div class="nav">Frases</div>
+    </div>
+    <div class="group">
+      <h4>Minha conta</h4>
+      <div class="nav">Meu progresso</div>
+      <div class="nav">Medalhas</div>
+      <div class="nav">Sair</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="col">
+      <h1 class="hello">Olá, Vitor</h1>
+      <p class="lead">O que você gostaria de estudar hoje?</p>
+
+      <div class="rule"></div>
+
+      <div class="seals">
+        <div class="seal ok"><div class="ring">248</div><span>acertos</span></div>
+        <div class="seal no"><div class="ring">37</div><span>erros</span></div>
+        <div class="seal nx"><div class="ring">112</div><span>palavras<br>revisadas</span></div>
+        <div class="seal sq"><div class="ring">7</div><span>em sequência</span></div>
+      </div>
+
+      <div class="rule"></div>
+
+      <div class="k">Continue de onde parou</div>
+      <div class="card">
+        <div class="g">漢</div>
+        <div>
+          <div class="t">Kanji · leitura e significado</div>
+          <div class="s">46 de 110 revisados</div>
+          <div class="bar"><i></i></div>
+        </div>
+        <button class="go">Continuar</button>
+      </div>
+
+      <div class="rule"></div>
+
+      <div class="k">Medalhas</div>
+      <div class="meds">
+        <div class="med"><div class="mring">一</div><b>Primeiro passo</b><span>conquistada</span></div>
+        <div class="med"><div class="mring">五</div><b>Em sequência</b><span>conquistada</span></div>
+        <div class="med lock"><div class="mring">十</div><b>Imparável</b><span>faltam 3</span></div>
+        <div class="med lock"><div class="mring">百</div><b>Centenário</b><span>faltam 52</span></div>
+      </div>
+    </div>
+  </main>
+
+</div>
+</body>
+</html>
