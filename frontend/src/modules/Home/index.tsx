@@ -1,35 +1,42 @@
-import { useNavigate } from "react-router-dom";
-import { Navbar } from "../../components/Navbar";
-import { Card } from "../../components/Card";
-import { LogoutButton } from "../../components/LogoutButton";
-import { PageWrapper, ContentArea, Title, Subtitle } from "../../styles/GlobalStyles";
-import { CardsRow, Eyebrow } from "./style";
+import { useAuth } from "../../contexts/authContext";
+import { Subtitle } from "../../styles/GlobalStyles";
+import { BlocoRetomada } from "./BlocoRetomada";
+import { CartaoMedalha } from "./CartaoMedalha";
+import { CartaoMetrica } from "./CartaoMetrica";
+import { derivarMedalhas } from "./medalhas";
+import { CONVITE_INICIAL, descreverSessao } from "./retomada";
+import { ListaMedalhas, Metricas, Saudacao, TituloSecao } from "./style";
+import { usePainel } from "./usePainel";
 
 export function Home() {
-  const navigate = useNavigate();
+  const { user } = useAuth();
+  const { resumo, sessao, carregando } = usePainel();
 
   return (
-    <PageWrapper>
-      <Navbar title="N5 Study" right={<LogoutButton />} />
-      <ContentArea>
-        <Eyebrow>Preparação JLPT</Eyebrow>
-        <Title>Escolha como quer estudar hoje</Title>
-        <Subtitle>Flashcards para memorização rápida ou a área de estudo livre.</Subtitle>
-        <CardsRow>
-          <Card
-            stamp="字"
-            title="Flashcards"
-            description="Katakana, Hiragana e Kanjis para revisão rápida."
-            onClick={() => navigate("/flashcards")}
-          />
-          <Card
-            stamp="学"
-            title="Estudo"
-            description="Área de estudo livre para o conteúdo do N5."
-            onClick={() => navigate("/study")}
-          />
-        </CardsRow>
-      </ContentArea>
-    </PageWrapper>
+    <>
+      <Saudacao>Olá, {user?.nomeUsuario}</Saudacao>
+      <Subtitle>O que você gostaria de estudar hoje?</Subtitle>
+
+      <Metricas>
+        <CartaoMetrica rotulo="Acertos" valor={resumo.totalAcertos} tom="sucesso" />
+        <CartaoMetrica rotulo="Erros" valor={resumo.totalErros} tom="erro" />
+        <CartaoMetrica rotulo="Palavras revisadas" valor={resumo.palavrasRevisadas} tom="neutro" />
+        <CartaoMetrica rotulo="Sequência atual" valor={resumo.sequenciaAtual} tom="destaque" />
+      </Metricas>
+
+      <TituloSecao>Continue de onde parou</TituloSecao>
+      {!carregando && (
+        <BlocoRetomada
+          descricao={sessao === null ? CONVITE_INICIAL : descreverSessao(sessao)}
+        />
+      )}
+
+      <TituloSecao>Suas medalhas</TituloSecao>
+      <ListaMedalhas>
+        {derivarMedalhas(resumo).map((medalha) => (
+          <CartaoMedalha key={medalha.id} medalha={medalha} />
+        ))}
+      </ListaMedalhas>
+    </>
   );
 }

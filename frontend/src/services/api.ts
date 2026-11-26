@@ -49,12 +49,12 @@ interface ErrorPayload {
 }
 
 interface RequestOptions {
-  method?: "GET" | "POST";
+  method?: "GET" | "POST" | "PUT";
   body?: unknown;
   authenticated?: boolean;
 }
 
-export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
+async function sendRequest(path: string, options: RequestOptions): Promise<Response> {
   const headers: Record<string, string> = { "Content-Type": "application/json" };
 
   if (options.authenticated !== false) {
@@ -78,6 +78,25 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
 
   if (!response.ok) {
     throw await buildApiError(response);
+  }
+
+  return response;
+}
+
+export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
+  const response = await sendRequest(path, options);
+
+  return (await response.json()) as T;
+}
+
+export async function apiRequestOrNull<T>(
+  path: string,
+  options: RequestOptions = {}
+): Promise<T | null> {
+  const response = await sendRequest(path, options);
+
+  if (response.status === 204) {
+    return null;
   }
 
   return (await response.json()) as T;

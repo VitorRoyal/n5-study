@@ -273,6 +273,6 @@ export type FlashcardTab = FlashcardCategory | "images";
 export const tabLabels: Record<FlashcardTab, string> = {
   hiragana: "Hiragana",
   katakana: "Katakana",
-  kanji: "Kanjis",
-  images: "Imagens",
+  kanji: "Kanji",
+  images: "Palavras com imagem",
 };

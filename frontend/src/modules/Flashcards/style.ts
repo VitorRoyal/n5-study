@@ -1,35 +1,6 @@
 import styled, { css } from "styled-components";
 import { colors } from "../../styles/colors";
 
-export const TabButton = styled.button<{ $active: boolean }>`
-  border: none;
-  background: none;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 8px 14px;
-  cursor: pointer;
-  color: ${colors.inkSoft};
-  border-bottom: 2px solid transparent;
-  transition: color 0.15s ease, border-color 0.15s ease;
-
-  ${({ $active }) =>
-    $active &&
-    css`
-      color: ${colors.indigo};
-      border-bottom-color: ${colors.sealRed};
-      font-weight: 700;
-    `}
-
-  &:hover {
-    color: ${colors.indigo};
-  }
-
-  &:focus-visible {
-    outline: 2px solid ${colors.sealRed};
-    outline-offset: 2px;
-  }
-`;
-
 export const QuizWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -39,16 +10,16 @@ export const QuizWrapper = styled.div`
 
 export const QuizGrid = styled.div`
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: center;
   gap: 28px;
 `;
 
 export const ScoreCounter = styled.div`
-  position: fixed;
-  left: 24px;
+  position: sticky;
   bottom: 24px;
+  width: fit-content;
   background-color: ${colors.surface};
   border: 2px solid ${colors.lineStrong};
   border-radius: 999px;

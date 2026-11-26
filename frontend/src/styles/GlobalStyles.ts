@@ -35,16 +35,8 @@ export const GlobalStyles = createGlobalStyle`
   }
 `;
 
-export const PageWrapper = styled.div`
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: ${colors.washi};
-`;
-
 export const ContentArea = styled.main`
-  flex: 1;
-  padding: 48px 40px;
+  padding: 40px 44px 56px;
 `;
 
 export const Title = styled.h1`
