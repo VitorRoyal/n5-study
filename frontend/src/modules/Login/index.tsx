@@ -4,10 +4,13 @@ import { Title, Subtitle } from "../../styles/GlobalStyles";
 import { useAuth } from "../../contexts/authContext";
 import { ApiError } from "../../services/api";
 import {
-  LoginWrapper,
-  LoginCard,
-  LoginStamp,
-  LoginHeader,
+  LoginLayout,
+  BrandPanel,
+  BrandStamp,
+  BrandName,
+  FormPanel,
+  FormContent,
+  FormHeader,
   LoginForm,
   FieldLabel,
   TextField,
@@ -70,57 +73,63 @@ export function Login() {
   }
 
   return (
-    <LoginWrapper>
-      <LoginCard>
-        <LoginStamp>字</LoginStamp>
-        <LoginHeader>
-          <Title>N5 Study</Title>
-          <Subtitle>
+    <LoginLayout>
+      <BrandPanel>
+        <BrandStamp>字</BrandStamp>
+        <BrandName>Nihon GO</BrandName>
+      </BrandPanel>
+
+      <FormPanel>
+        <FormContent>
+          <FormHeader>
+            <Title as="h2">{mode === "login" ? "Entrar" : "Criar conta"}</Title>
+            <Subtitle>
+              {mode === "login"
+                ? "Entre para continuar seus estudos."
+                : "Crie sua conta para comecar a estudar."}
+            </Subtitle>
+          </FormHeader>
+
+          <LoginForm onSubmit={handleSubmit}>
+            <FieldLabel>
+              Usuario
+              <TextField
+                type="text"
+                value={nomeUsuario}
+                onChange={(event) => setNomeUsuario(event.target.value)}
+                autoComplete="username"
+                spellCheck={false}
+                required
+              />
+            </FieldLabel>
+
+            <FieldLabel>
+              Senha
+              <TextField
+                type="password"
+                value={senha}
+                onChange={(event) => setSenha(event.target.value)}
+                autoComplete={mode === "login" ? "current-password" : "new-password"}
+                required
+              />
+            </FieldLabel>
+
+            {errorMessage !== null && <ErrorMessage>{errorMessage}</ErrorMessage>}
+
+            <SubmitButton type="submit" disabled={isSubmitting}>
+              {mode === "login" ? "Entrar" : "Criar conta"}
+            </SubmitButton>
+          </LoginForm>
+
+          <ToggleModeButton type="button" onClick={toggleMode}>
             {mode === "login"
-              ? "Entre para continuar seus estudos."
-              : "Crie sua conta para comecar a estudar."}
-          </Subtitle>
-        </LoginHeader>
+              ? "Ainda nao tem conta? Cadastre-se"
+              : "Ja tem conta? Voltar para o login"}
+          </ToggleModeButton>
 
-        <LoginForm onSubmit={handleSubmit}>
-          <FieldLabel>
-            Usuario
-            <TextField
-              type="text"
-              value={nomeUsuario}
-              onChange={(event) => setNomeUsuario(event.target.value)}
-              autoComplete="username"
-              spellCheck={false}
-              required
-            />
-          </FieldLabel>
-
-          <FieldLabel>
-            Senha
-            <TextField
-              type="password"
-              value={senha}
-              onChange={(event) => setSenha(event.target.value)}
-              autoComplete={mode === "login" ? "current-password" : "new-password"}
-              required
-            />
-          </FieldLabel>
-
-          {errorMessage !== null && <ErrorMessage>{errorMessage}</ErrorMessage>}
-
-          <SubmitButton type="submit" disabled={isSubmitting}>
-            {mode === "login" ? "Entrar" : "Criar conta"}
-          </SubmitButton>
-        </LoginForm>
-
-        <ToggleModeButton type="button" onClick={toggleMode}>
-          {mode === "login"
-            ? "Ainda nao tem conta? Cadastre-se"
-            : "Ja tem conta? Voltar para o login"}
-        </ToggleModeButton>
-
-        <FooterNote>Conta inicial de administrador: admin</FooterNote>
-      </LoginCard>
-    </LoginWrapper>
+          <FooterNote>Conta inicial de administrador: admin</FooterNote>
+        </FormContent>
+      </FormPanel>
+    </LoginLayout>
   );
 }
