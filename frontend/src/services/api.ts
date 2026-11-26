@@ -1,119 +1,119 @@
-const envApiUrl: unknown = import.meta.env.VITE_API_URL;
+const urlApiAmbiente: unknown = import.meta.env.VITE_API_URL;
 
-export const API_BASE_URL =
-  typeof envApiUrl === "string" && envApiUrl.length > 0
-    ? envApiUrl
+export const URL_BASE_API =
+  typeof urlApiAmbiente === "string" && urlApiAmbiente.length > 0
+    ? urlApiAmbiente
     : "http://localhost:8080/api/v1";
 
-const TOKEN_STORAGE_KEY = "n5study.token";
+const CHAVE_ARMAZENAMENTO_TOKEN = "n5study.token";
 
-export class ApiError extends Error {
+export class ErroApi extends Error {
   readonly status: number;
-  readonly details: string[];
+  readonly detalhes: string[];
 
-  constructor(status: number, message: string, details: string[]) {
+  constructor(status: number, message: string, detalhes: string[]) {
     super(message);
-    this.name = "ApiError";
+    this.name = "ErroApi";
     this.status = status;
-    this.details = details;
+    this.detalhes = detalhes;
   }
 }
 
-export function readStoredToken(): string | null {
+export function lerTokenArmazenado(): string | null {
   try {
-    return window.localStorage.getItem(TOKEN_STORAGE_KEY);
+    return window.localStorage.getItem(CHAVE_ARMAZENAMENTO_TOKEN);
   } catch {
     return null;
   }
 }
 
-export function writeStoredToken(token: string) {
+export function gravarTokenArmazenado(token: string) {
   try {
-    window.localStorage.setItem(TOKEN_STORAGE_KEY, token);
+    window.localStorage.setItem(CHAVE_ARMAZENAMENTO_TOKEN, token);
   } catch {
     return;
   }
 }
 
-export function removeStoredToken() {
+export function removerTokenArmazenado() {
   try {
-    window.localStorage.removeItem(TOKEN_STORAGE_KEY);
+    window.localStorage.removeItem(CHAVE_ARMAZENAMENTO_TOKEN);
   } catch {
     return;
   }
 }
 
-interface ErrorPayload {
+interface CorpoErro {
   mensagem?: string;
   detalhes?: string[];
 }
 
-interface RequestOptions {
+interface OpcoesRequisicao {
   method?: "GET" | "POST" | "PUT";
   body?: unknown;
-  authenticated?: boolean;
+  autenticada?: boolean;
 }
 
-async function sendRequest(path: string, options: RequestOptions): Promise<Response> {
+async function enviarRequisicao(caminho: string, opcoes: OpcoesRequisicao): Promise<Response> {
   const headers: Record<string, string> = { "Content-Type": "application/json" };
 
-  if (options.authenticated !== false) {
-    const token = readStoredToken();
+  if (opcoes.autenticada !== false) {
+    const token = lerTokenArmazenado();
     if (token !== null) {
       headers.Authorization = `Bearer ${token}`;
     }
   }
 
-  let response: Response;
+  let resposta: Response;
 
   try {
-    response = await fetch(`${API_BASE_URL}${path}`, {
-      method: options.method ?? "GET",
+    resposta = await fetch(`${URL_BASE_API}${caminho}`, {
+      method: opcoes.method ?? "GET",
       headers,
-      body: options.body === undefined ? undefined : JSON.stringify(options.body),
+      body: opcoes.body === undefined ? undefined : JSON.stringify(opcoes.body),
     });
   } catch {
-    throw new ApiError(0, "Nao foi possivel conectar ao servidor.", []);
+    throw new ErroApi(0, "Nao foi possivel conectar ao servidor.", []);
   }
 
-  if (!response.ok) {
-    throw await buildApiError(response);
+  if (!resposta.ok) {
+    throw await montarErroApi(resposta);
   }
 
-  return response;
+  return resposta;
 }
 
-export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
-  const response = await sendRequest(path, options);
+export async function requisicaoApi<T>(caminho: string, opcoes: OpcoesRequisicao = {}): Promise<T> {
+  const resposta = await enviarRequisicao(caminho, opcoes);
 
-  return (await response.json()) as T;
+  return (await resposta.json()) as T;
 }
 
-export async function apiRequestOrNull<T>(
-  path: string,
-  options: RequestOptions = {}
+export async function requisicaoApiOuNulo<T>(
+  caminho: string,
+  opcoes: OpcoesRequisicao = {}
 ): Promise<T | null> {
-  const response = await sendRequest(path, options);
+  const resposta = await enviarRequisicao(caminho, opcoes);
 
-  if (response.status === 204) {
+  if (resposta.status === 204) {
     return null;
   }
 
-  return (await response.json()) as T;
+  return (await resposta.json()) as T;
 }
 
-async function buildApiError(response: Response): Promise<ApiError> {
-  let payload: ErrorPayload = {};
+async function montarErroApi(resposta: Response): Promise<ErroApi> {
+  let conteudoErro: CorpoErro = {};
 
   try {
-    payload = (await response.json()) as ErrorPayload;
+    conteudoErro = (await resposta.json()) as CorpoErro;
   } catch {
-    payload = {};
+    conteudoErro = {};
   }
 
-  return new ApiError(
-    response.status,
-    payload.mensagem ?? "Nao foi possivel completar a requisicao.",
-    payload.detalhes ?? []
+  return new ErroApi(
+    resposta.status,
+    conteudoErro.mensagem ?? "Nao foi possivel completar a requisicao.",
+    conteudoErro.detalhes ?? []
   );
 }

@@ -14,7 +14,7 @@ export interface EstadoPainel {
 }
 
 export function usePainel(): EstadoPainel {
-  const [estado, setEstado] = useState<EstadoPainel>({
+  const [estado, definirEstado] = useState<EstadoPainel>({
     resumo: RESUMO_VAZIO,
     sessao: null,
     carregando: true,
@@ -26,12 +26,12 @@ export function usePainel(): EstadoPainel {
     Promise.all([buscarResumo(), buscarSessao()])
       .then(([resumo, sessao]) => {
         if (ativo) {
-          setEstado({ resumo, sessao, carregando: false });
+          definirEstado({ resumo, sessao, carregando: false });
         }
       })
       .catch(() => {
         if (ativo) {
-          setEstado({ resumo: RESUMO_VAZIO, sessao: null, carregando: false });
+          definirEstado({ resumo: RESUMO_VAZIO, sessao: null, carregando: false });
         }
       });
 

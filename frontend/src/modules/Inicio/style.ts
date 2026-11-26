@@ -1,23 +1,23 @@
 import styled, { css } from "styled-components";
 import { colors } from "../../styles/colors";
-import { PrimaryButton, Title } from "../../styles/GlobalStyles";
+import { BotaoPrimario, Titulo } from "../../styles/GlobalStyles";
 
 export type TomMetrica = "sucesso" | "erro" | "neutro" | "destaque";
 
 const tonsMetrica: Record<TomMetrica, string> = {
   sucesso: colors.jade,
-  erro: colors.sealRed,
+  erro: colors.vermelhoSelo,
   neutro: colors.indigo,
-  destaque: colors.gold,
+  destaque: colors.ouro,
 };
 
 const cartaoBase = css`
-  background-color: ${colors.surface};
-  border: 3px solid ${colors.lineStrong};
+  background-color: ${colors.superficie};
+  border: 3px solid ${colors.linhaForte};
   border-radius: 18px;
 `;
 
-export const Saudacao = styled(Title)`
+export const Saudacao = styled(Titulo)`
   font-size: 34px;
 `;
 
@@ -45,7 +45,7 @@ export const Metrica = styled.div`
 
 export const RotuloMetrica = styled.span`
   font-size: 12px;
-  color: ${colors.inkSoft};
+  color: ${colors.tintaSuave};
   letter-spacing: 0.04em;
 `;
 
@@ -72,7 +72,7 @@ export const IlustracaoRetomada = styled.div`
   flex: none;
   border-radius: 14px;
   background-color: ${colors.washiDark};
-  color: ${colors.ink};
+  color: ${colors.tinta};
   font-family: "Shippori Mincho", serif;
   font-size: 30px;
   display: flex;
@@ -84,7 +84,7 @@ export const LegendaRetomada = styled.div`
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: ${colors.inkSoft};
+  color: ${colors.tintaSuave};
 `;
 
 export const TituloRetomada = styled.div`
@@ -111,11 +111,11 @@ export const Preenchimento = styled.i<{ $percentual: number }>`
 
 export const DetalheRetomada = styled.div`
   font-size: 12px;
-  color: ${colors.inkSoft};
+  color: ${colors.tintaSuave};
   margin-top: 6px;
 `;
 
-export const BotaoContinuar = styled(PrimaryButton)`
+export const BotaoContinuar = styled(BotaoPrimario)`
   margin-left: auto;
   flex: none;
   border-width: 2px;
@@ -148,8 +148,8 @@ export const SeloMedalha = styled.div<{ $bloqueada: boolean }>`
   height: 52px;
   margin: 0 auto 10px;
   border-radius: 50%;
-  border: 2px solid ${colors.gold};
-  color: ${colors.gold};
+  border: 2px solid ${colors.ouro};
+  color: ${colors.ouro};
   font-family: "Shippori Mincho", serif;
   font-size: 21px;
   display: flex;
@@ -160,8 +160,8 @@ export const SeloMedalha = styled.div<{ $bloqueada: boolean }>`
     $bloqueada &&
     css`
       border-style: dashed;
-      border-color: ${colors.lineStrong};
-      color: ${colors.lineStrong};
+      border-color: ${colors.linhaForte};
+      color: ${colors.linhaForte};
     `}
 `;
 
@@ -175,5 +175,5 @@ export const DescricaoMedalha = styled.span`
   margin-top: 3px;
   font-size: 11px;
   line-height: 1.4;
-  color: ${colors.inkSoft};
+  color: ${colors.tintaSuave};
 `;

@@ -16,7 +16,7 @@ export interface BlocoRetomadaProps {
 }
 
 export function BlocoRetomada({ descricao }: BlocoRetomadaProps) {
-  const navigate = useNavigate();
+  const navegar = useNavigate();
 
   return (
     <Retomada>
@@ -31,7 +31,7 @@ export function BlocoRetomada({ descricao }: BlocoRetomadaProps) {
         )}
         <DetalheRetomada>{descricao.detalhe}</DetalheRetomada>
       </div>
-      <BotaoContinuar type="button" onClick={() => navigate(descricao.rota)}>
+      <BotaoContinuar type="button" onClick={() => navegar(descricao.rota)}>
         {descricao.rotuloBotao}
       </BotaoContinuar>
     </Retomada>

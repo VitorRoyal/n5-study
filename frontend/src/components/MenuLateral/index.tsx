@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "../../contexts/authContext";
+import { useAutenticacao } from "../../contexts/contextoAutenticacao";
 import { caminhosIcones, gruposMenu, type ItemMenu, type NomeIcone } from "./itens";
 import {
   EtiquetaEmBreve,
@@ -59,11 +59,11 @@ interface ItemComSubitensProps {
 }
 
 function ItemComSubitens({ item }: ItemComSubitensProps) {
-  const [aberto, setAberto] = useState(true);
+  const [aberto, definirAberto] = useState(true);
 
   return (
     <>
-      <ItemBotao type="button" aria-expanded={aberto} onClick={() => setAberto((atual) => !atual)}>
+      <ItemBotao type="button" aria-expanded={aberto} onClick={() => definirAberto((atual) => !atual)}>
         <IconeMenu nome={item.icone} />
         {item.rotulo}
         <Seta $aberto={aberto} aria-hidden="true">
@@ -91,7 +91,7 @@ function ItemComSubitens({ item }: ItemComSubitensProps) {
 }
 
 export function MenuLateral() {
-  const { signOut } = useAuth();
+  const { sair } = useAutenticacao();
 
   return (
     <Menu>
@@ -109,7 +109,7 @@ export function MenuLateral() {
 
             if (item.acao === "sair") {
               return (
-                <ItemBotao key={item.rotulo} type="button" onClick={signOut}>
+                <ItemBotao key={item.rotulo} type="button" onClick={sair}>
                   <IconeMenu nome={item.icone} />
                   {item.rotulo}
                 </ItemBotao>

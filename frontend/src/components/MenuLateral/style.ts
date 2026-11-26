@@ -7,8 +7,8 @@ export const Menu = styled.aside`
   top: 0;
   height: 100vh;
   overflow-y: auto;
-  background-color: ${colors.surface};
-  border-right: 3px solid ${colors.lineStrong};
+  background-color: ${colors.superficie};
+  border-right: 3px solid ${colors.linhaForte};
   padding: 22px 0;
   display: flex;
   flex-direction: column;
@@ -26,9 +26,9 @@ export const Selo = styled.div`
   width: 38px;
   height: 38px;
   flex: none;
-  border: 2px solid ${colors.sealRed};
+  border: 2px solid ${colors.vermelhoSelo};
   border-radius: 50%;
-  color: ${colors.sealRed};
+  color: ${colors.vermelhoSelo};
   font-family: "Shippori Mincho", serif;
   font-size: 18px;
   display: flex;
@@ -53,7 +53,7 @@ export const TituloGrupo = styled.h4`
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: ${colors.lineStrong};
+  color: ${colors.linhaForte};
   font-weight: 700;
   padding: 0 20px 7px;
 `;
@@ -69,7 +69,7 @@ const itemBase = css`
   background: none;
   font-size: 14px;
   text-align: left;
-  color: ${colors.inkSoft};
+  color: ${colors.tintaSuave};
   cursor: pointer;
   transition: background-color 0.15s ease, color 0.15s ease;
 
@@ -78,15 +78,15 @@ const itemBase = css`
   }
 
   &:focus-visible {
-    outline: 2px solid ${colors.sealRed};
+    outline: 2px solid ${colors.vermelhoSelo};
     outline-offset: -2px;
   }
 `;
 
 const itemAtivo = css`
   background-color: ${colors.washiDark};
-  border-left-color: ${colors.sealRed};
-  color: ${colors.ink};
+  border-left-color: ${colors.vermelhoSelo};
+  color: ${colors.tinta};
   font-weight: 700;
 `;
 
@@ -124,7 +124,7 @@ export const Icone = styled.svg`
 export const Seta = styled.span<{ $aberto: boolean }>`
   margin-left: auto;
   font-size: 10px;
-  color: ${colors.lineStrong};
+  color: ${colors.linhaForte};
   transition: transform 0.15s ease;
 
   ${({ $aberto }) =>
@@ -138,7 +138,7 @@ export const EtiquetaEmBreve = styled.span`
   margin-left: auto;
   font-size: 9px;
   background-color: ${colors.washiDark};
-  color: ${colors.inkSoft};
+  color: ${colors.tintaSuave};
   padding: 2px 7px;
   border-radius: 999px;
   letter-spacing: 0.06em;

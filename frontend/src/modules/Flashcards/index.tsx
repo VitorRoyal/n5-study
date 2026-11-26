@@ -1,17 +1,17 @@
-import { Title } from "../../styles/GlobalStyles";
-import { tabLabels, type FlashcardTab } from "./data";
-import { ImageQuiz } from "./ImageQuiz";
+import { Titulo } from "../../styles/GlobalStyles";
+import { rotulosAbas, type AbaFlashcard } from "./dados";
+import { QuizImagens } from "./QuizImagens";
 import { TreinoCartas } from "./TreinoCartas";
 
 export interface FlashcardsProps {
-  tab: FlashcardTab;
+  aba: AbaFlashcard;
 }
 
-export function Flashcards({ tab }: FlashcardsProps) {
+export function Flashcards({ aba }: FlashcardsProps) {
   return (
     <>
-      <Title>{tabLabels[tab]}</Title>
-      {tab === "images" ? <ImageQuiz /> : <TreinoCartas key={tab} category={tab} />}
+      <Titulo>{rotulosAbas[aba]}</Titulo>
+      {aba === "imagens" ? <QuizImagens /> : <TreinoCartas key={aba} categoria={aba} />}
     </>
   );
 }

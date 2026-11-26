@@ -1,5 +1,5 @@
-import { useAuth } from "../../contexts/authContext";
-import { Subtitle } from "../../styles/GlobalStyles";
+import { useAutenticacao } from "../../contexts/contextoAutenticacao";
+import { Subtitulo } from "../../styles/GlobalStyles";
 import { BlocoRetomada } from "./BlocoRetomada";
 import { CartaoMedalha } from "./CartaoMedalha";
 import { CartaoMetrica } from "./CartaoMetrica";
@@ -8,14 +8,14 @@ import { CONVITE_INICIAL, descreverSessao } from "./retomada";
 import { ListaMedalhas, Metricas, Saudacao, TituloSecao } from "./style";
 import { usePainel } from "./usePainel";
 
-export function Home() {
-  const { user } = useAuth();
+export function Inicio() {
+  const { usuario } = useAutenticacao();
   const { resumo, sessao, carregando } = usePainel();
 
   return (
     <>
-      <Saudacao>Olá, {user?.nomeUsuario}</Saudacao>
-      <Subtitle>O que você gostaria de estudar hoje?</Subtitle>
+      <Saudacao>Olá, {usuario?.nomeUsuario}</Saudacao>
+      <Subtitulo>O que você gostaria de estudar hoje?</Subtitulo>
 
       <Metricas>
         <CartaoMetrica rotulo="Acertos" valor={resumo.totalAcertos} tom="sucesso" />

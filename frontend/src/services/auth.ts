@@ -1,49 +1,49 @@
-import { apiRequest, removeStoredToken, writeStoredToken } from "./api";
+import { requisicaoApi, removerTokenArmazenado, gravarTokenArmazenado } from "./api";
 
-export type UserRole = "ADMIN" | "ESTUDANTE";
+export type PapelUsuario = "ADMIN" | "ESTUDANTE";
 
-export interface AuthenticatedUser {
+export interface UsuarioAutenticado {
   id: number;
   nomeUsuario: string;
-  papel: UserRole;
+  papel: PapelUsuario;
   criadoEm: string;
 }
 
-interface LoginResponse {
+interface RespostaLogin {
   token: string;
   tipoToken: string;
   expiraEmSegundos: number;
-  usuario: AuthenticatedUser;
+  usuario: UsuarioAutenticado;
 }
 
-export async function login(nomeUsuario: string, senha: string): Promise<AuthenticatedUser> {
-  const response = await apiRequest<LoginResponse>("/autenticacao/login", {
+export async function login(nomeUsuario: string, senha: string): Promise<UsuarioAutenticado> {
+  const resposta = await requisicaoApi<RespostaLogin>("/autenticacao/login", {
     method: "POST",
     body: { nomeUsuario, senha },
-    authenticated: false,
+    autenticada: false,
   });
 
-  writeStoredToken(response.token);
+  gravarTokenArmazenado(resposta.token);
 
-  return response.usuario;
+  return resposta.usuario;
 }
 
-export async function register(nomeUsuario: string, senha: string): Promise<AuthenticatedUser> {
-  const response = await apiRequest<LoginResponse>("/autenticacao/cadastro", {
+export async function registrar(nomeUsuario: string, senha: string): Promise<UsuarioAutenticado> {
+  const resposta = await requisicaoApi<RespostaLogin>("/autenticacao/cadastro", {
     method: "POST",
     body: { nomeUsuario, senha },
-    authenticated: false,
+    autenticada: false,
   });
 
-  writeStoredToken(response.token);
+  gravarTokenArmazenado(resposta.token);
 
-  return response.usuario;
+  return resposta.usuario;
 }
 
-export function fetchCurrentUser(): Promise<AuthenticatedUser> {
-  return apiRequest<AuthenticatedUser>("/usuarios/eu");
+export function buscarUsuarioAtual(): Promise<UsuarioAutenticado> {
+  return requisicaoApi<UsuarioAutenticado>("/usuarios/eu");
 }
 
-export function clearSession() {
-  removeStoredToken();
+export function limparSessao() {
+  removerTokenArmazenado();
 }

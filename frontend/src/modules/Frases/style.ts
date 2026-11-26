@@ -1,18 +1,18 @@
 import styled, { css } from "styled-components";
 import { colors } from "../../styles/colors";
-import { PrimaryButton, SecondaryButton } from "../../styles/GlobalStyles";
+import { BotaoPrimario, BotaoSecundario } from "../../styles/GlobalStyles";
 
-export const ExerciseWrapper = styled.div`
+export const ContainerExercicio = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 32px;
 `;
 
-export const ExerciseCard = styled.section`
+export const CartaoExercicio = styled.section`
   width: 100%;
   max-width: 720px;
-  background-color: ${colors.surface};
-  border: 3px solid ${colors.lineStrong};
+  background-color: ${colors.superficie};
+  border: 3px solid ${colors.linhaForte};
   border-radius: 20px;
   padding: 32px;
   display: flex;
@@ -20,31 +20,31 @@ export const ExerciseCard = styled.section`
   gap: 28px;
 `;
 
-export const ExerciseHeader = styled.header`
+export const CabecalhoExercicio = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-size: 13px;
-  color: ${colors.inkSoft};
+  color: ${colors.tintaSuave};
 `;
 
-export const ExerciseProgress = styled.span`
+export const ProgressoExercicio = styled.span`
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 `;
 
-export const ExerciseScore = styled.span`
+export const PontuacaoExercicio = styled.span`
   font-weight: 600;
   color: ${colors.indigo};
 `;
 
-export const PromptLabel = styled.h2`
+export const RotuloEnunciado = styled.h2`
   font-size: 20px;
   font-weight: 700;
 `;
 
-export const SentenceRow = styled.div`
+export const LinhaFrase = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -53,34 +53,34 @@ export const SentenceRow = styled.div`
   min-height: 72px;
 `;
 
-export const SentenceText = styled.span`
+export const TextoFrase = styled.span`
   font-family: "Shippori Mincho", serif;
   font-size: 28px;
-  color: ${colors.ink};
+  color: ${colors.tinta};
 `;
 
-export const WordAnchor = styled.span`
+export const AncoraPalavra = styled.span`
   position: relative;
   display: inline-flex;
 `;
 
-export const WordButton = styled.button<{ $open: boolean }>`
+export const BotaoPalavra = styled.button<{ $aberta: boolean }>`
   border: none;
   background: none;
   padding: 0;
   font-family: "Shippori Mincho", serif;
   font-size: 28px;
-  color: ${colors.ink};
+  color: ${colors.tinta};
   cursor: pointer;
   text-decoration: underline;
   text-decoration-style: dashed;
   text-decoration-thickness: 2px;
-  text-decoration-color: ${colors.lineStrong};
+  text-decoration-color: ${colors.linhaForte};
   text-underline-offset: 8px;
   transition: color 0.15s ease, text-decoration-color 0.15s ease;
 
-  ${({ $open }) =>
-    $open &&
+  ${({ $aberta }) =>
+    $aberta &&
     css`
       color: ${colors.indigo};
       text-decoration-style: solid;
@@ -93,12 +93,12 @@ export const WordButton = styled.button<{ $open: boolean }>`
   }
 
   &:focus-visible {
-    outline: 2px solid ${colors.sealRed};
+    outline: 2px solid ${colors.vermelhoSelo};
     outline-offset: 4px;
   }
 `;
 
-export const WordPopover = styled.span`
+export const BalaoPalavra = styled.span`
   position: absolute;
   top: calc(100% + 12px);
   left: 50%;
@@ -125,55 +125,55 @@ export const WordPopover = styled.span`
   }
 `;
 
-export const WordRomaji = styled.span`
+export const RomajiPalavra = styled.span`
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: ${colors.surface};
+  color: ${colors.superficie};
 `;
 
-export const WordTranslation = styled.span`
+export const TraducaoPalavra = styled.span`
   font-size: 13px;
   line-height: 1.4;
   color: ${colors.washiDark};
   padding-top: 6px;
-  border-top: 1px solid ${colors.indigoSoft};
+  border-top: 1px solid ${colors.indigoSuave};
 `;
 
-export const BlankSlot = styled.button<{ $filled: boolean; $checked: boolean; $correct: boolean }>`
+export const Lacuna = styled.button<{ $preenchida: boolean; $verificada: boolean; $correto: boolean }>`
   min-width: 120px;
   min-height: 52px;
   padding: 8px 18px;
   font-family: "Shippori Mincho", serif;
   font-size: 26px;
-  color: ${colors.ink};
+  color: ${colors.tinta};
   background-color: ${colors.washi};
-  border: 2px dashed ${colors.lineStrong};
+  border: 2px dashed ${colors.linhaForte};
   border-radius: 14px;
   cursor: pointer;
 
-  ${({ $filled }) =>
-    $filled &&
+  ${({ $preenchida }) =>
+    $preenchida &&
     css`
       border-style: solid;
-      background-color: ${colors.surface};
+      background-color: ${colors.superficie};
     `}
 
-  ${({ $checked, $correct }) =>
-    $checked &&
+  ${({ $verificada, $correto }) =>
+    $verificada &&
     css`
       cursor: default;
-      border-color: ${$correct ? colors.indigo : colors.sealRed};
-      color: ${$correct ? colors.indigo : colors.sealRed};
+      border-color: ${$correto ? colors.indigo : colors.vermelhoSelo};
+      color: ${$correto ? colors.indigo : colors.vermelhoSelo};
     `}
 
   &:focus-visible {
-    outline: 2px solid ${colors.sealRed};
+    outline: 2px solid ${colors.vermelhoSelo};
     outline-offset: 2px;
   }
 `;
 
-export const OptionsRow = styled.div`
+export const LinhaOpcoes = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -181,19 +181,19 @@ export const OptionsRow = styled.div`
   gap: 12px;
 `;
 
-export const OptionChip = styled.button<{ $selected: boolean }>`
+export const ChipOpcao = styled.button<{ $selecionada: boolean }>`
   font-family: "Shippori Mincho", serif;
   font-size: 22px;
-  color: ${colors.ink};
-  background-color: ${colors.surface};
-  border: 2px solid ${colors.lineStrong};
+  color: ${colors.tinta};
+  background-color: ${colors.superficie};
+  border: 2px solid ${colors.linhaForte};
   border-radius: 999px;
   padding: 10px 24px;
   cursor: pointer;
   transition: transform 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
 
-  ${({ $selected }) =>
-    $selected &&
+  ${({ $selecionada }) =>
+    $selecionada &&
     css`
       border-color: ${colors.indigo};
       color: ${colors.indigo};
@@ -210,13 +210,13 @@ export const OptionChip = styled.button<{ $selected: boolean }>`
   }
 
   &:focus-visible {
-    outline: 2px solid ${colors.sealRed};
+    outline: 2px solid ${colors.vermelhoSelo};
     outline-offset: 2px;
   }
 `;
 
-export const FeedbackBox = styled.div<{ $correct: boolean }>`
-  border-left: 4px solid ${({ $correct }) => ($correct ? colors.indigo : colors.sealRed)};
+export const CaixaFeedback = styled.div<{ $correto: boolean }>`
+  border-left: 4px solid ${({ $correto }) => ($correto ? colors.indigo : colors.vermelhoSelo)};
   background-color: ${colors.washi};
   border-radius: 8px;
   padding: 16px 20px;
@@ -225,41 +225,41 @@ export const FeedbackBox = styled.div<{ $correct: boolean }>`
   gap: 8px;
 `;
 
-export const FeedbackTitle = styled.strong<{ $correct: boolean }>`
+export const TituloFeedback = styled.strong<{ $correto: boolean }>`
   font-size: 15px;
-  color: ${({ $correct }) => ($correct ? colors.indigo : colors.sealRed)};
+  color: ${({ $correto }) => ($correto ? colors.indigo : colors.vermelhoSelo)};
 `;
 
-export const FeedbackText = styled.span`
+export const TextoFeedback = styled.span`
   font-size: 14px;
-  color: ${colors.inkSoft};
+  color: ${colors.tintaSuave};
   line-height: 1.5;
 `;
 
-export const ActionsRow = styled.div`
+export const LinhaAcoes = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 12px;
 `;
 
-export const CheckButton = styled(PrimaryButton)`
+export const BotaoVerificar = styled(BotaoPrimario)`
   border-radius: 999px;
   padding: 12px 28px;
 
   &:disabled {
     cursor: default;
     opacity: 0.45;
-    background-color: ${colors.lineStrong};
-    border-color: ${colors.lineStrong};
+    background-color: ${colors.linhaForte};
+    border-color: ${colors.linhaForte};
   }
 `;
 
-export const NextButton = styled(SecondaryButton)`
+export const BotaoAvancar = styled(BotaoSecundario)`
   border-radius: 999px;
   padding: 12px 28px;
 `;
 
-export const ResultCard = styled.div`
+export const CartaoResultado = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -267,7 +267,7 @@ export const ResultCard = styled.div`
   text-align: center;
 `;
 
-export const ResultScore = styled.strong`
+export const PontuacaoResultado = styled.strong`
   font-family: "Shippori Mincho", serif;
   font-size: 40px;
   color: ${colors.indigo};

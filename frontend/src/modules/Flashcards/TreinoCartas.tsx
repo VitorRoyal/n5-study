@@ -1,74 +1,74 @@
 import { useRef, useState } from "react";
-import { Subtitle } from "../../styles/GlobalStyles";
-import { QuizWrapper, QuizGrid, ScoreCounter } from "./style";
-import { flashcardsByCategory, type FlashcardCategory, type FlashcardItem } from "./data";
-import { FlashCardItem } from "./FlashCardItem";
+import { Subtitulo } from "../../styles/GlobalStyles";
+import { ContainerQuiz, GradeQuiz, ContadorAcertos } from "./style";
+import { flashcardsPorCategoria, type CategoriaFlashcard, type ItemFlashcard } from "./dados";
+import { CartaoFlashcard } from "./CartaoFlashcard";
 
-const SLOT_COUNT = 5;
+const QUANTIDADE_SLOTS = 5;
 
-function createInitialPointers() {
-  return Array.from({ length: SLOT_COUNT }, (_, index) => index);
+function criarPonteirosIniciais() {
+  return Array.from({ length: QUANTIDADE_SLOTS }, (_, indice) => indice);
 }
 
-function shuffleCards(cards: FlashcardItem[]) {
-  const shuffled = [...cards];
+function embaralharCartoes(cartoes: ItemFlashcard[]) {
+  const embaralhado = [...cartoes];
 
-  for (let index = shuffled.length - 1; index > 0; index -= 1) {
-    const target = Math.floor(Math.random() * (index + 1));
-    [shuffled[index], shuffled[target]] = [shuffled[target], shuffled[index]];
+  for (let indice = embaralhado.length - 1; indice > 0; indice -= 1) {
+    const alvo = Math.floor(Math.random() * (indice + 1));
+    [embaralhado[indice], embaralhado[alvo]] = [embaralhado[alvo], embaralhado[indice]];
   }
 
-  return shuffled;
+  return embaralhado;
 }
 
-function buildSubtitle(category: FlashcardCategory) {
-  if (category === "kanji") {
+function montarSubtitulo(categoria: CategoriaFlashcard) {
+  if (categoria === "kanji") {
     return "Digite a leitura ou o significado de cada card para avancar para o proximo.";
   }
   return "Digite a leitura de cada card para avancar para o proximo.";
 }
 
 export interface TreinoCartasProps {
-  category: FlashcardCategory;
+  categoria: CategoriaFlashcard;
 }
 
-export function TreinoCartas({ category }: TreinoCartasProps) {
-  const [deck] = useState<FlashcardItem[]>(() => shuffleCards(flashcardsByCategory[category]));
-  const [slotPointers, setSlotPointers] = useState<number[]>(createInitialPointers);
-  const [correctCount, setCorrectCount] = useState(0);
-  const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
+export function TreinoCartas({ categoria }: TreinoCartasProps) {
+  const [baralho] = useState<ItemFlashcard[]>(() => embaralharCartoes(flashcardsPorCategoria[categoria]));
+  const [ponteirosSlots, definirPonteirosSlots] = useState<number[]>(criarPonteirosIniciais);
+  const [quantidadeAcertos, definirQuantidadeAcertos] = useState(0);
+  const refsCampos = useRef<Array<HTMLInputElement | null>>([]);
 
-  function handleCorrect(slotIndex: number) {
-    setSlotPointers((current) =>
-      current.map((pointer, index) => (index === slotIndex ? pointer + SLOT_COUNT : pointer))
+  function tratarAcerto(indiceSlot: number) {
+    definirPonteirosSlots((atual) =>
+      atual.map((ponteiro, indice) => (indice === indiceSlot ? ponteiro + QUANTIDADE_SLOTS : ponteiro))
     );
-    setCorrectCount((current) => current + 1);
+    definirQuantidadeAcertos((atual) => atual + 1);
   }
 
-  function focusFirstInput() {
-    inputRefs.current[0]?.focus();
+  function focarPrimeiroCampo() {
+    refsCampos.current[0]?.focus();
   }
 
   return (
     <>
-      <Subtitle>{buildSubtitle(category)}</Subtitle>
-      <QuizWrapper>
-        <QuizGrid>
-          {slotPointers.map((pointer, slotIndex) => (
-            <FlashCardItem
-              key={slotIndex}
-              item={deck[pointer % deck.length]}
-              onCorrect={() => handleCorrect(slotIndex)}
-              inputRef={(element) => {
-                inputRefs.current[slotIndex] = element;
+      <Subtitulo>{montarSubtitulo(categoria)}</Subtitulo>
+      <ContainerQuiz>
+        <GradeQuiz>
+          {ponteirosSlots.map((ponteiro, indiceSlot) => (
+            <CartaoFlashcard
+              key={indiceSlot}
+              item={baralho[ponteiro % baralho.length]}
+              aoAcertar={() => tratarAcerto(indiceSlot)}
+              refCampo={(elemento) => {
+                refsCampos.current[indiceSlot] = elemento;
               }}
-              isLastSlot={slotIndex === SLOT_COUNT - 1}
-              onWrapToFirst={focusFirstInput}
+              ehUltimoSlot={indiceSlot === QUANTIDADE_SLOTS - 1}
+              aoVoltarAoPrimeiro={focarPrimeiroCampo}
             />
           ))}
-        </QuizGrid>
-      </QuizWrapper>
-      <ScoreCounter>Acertos: {correctCount}</ScoreCounter>
+        </GradeQuiz>
+      </ContainerQuiz>
+      <ContadorAcertos>Acertos: {quantidadeAcertos}</ContadorAcertos>
     </>
   );
 }

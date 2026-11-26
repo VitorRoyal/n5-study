@@ -1,4 +1,4 @@
-import { ApiError, apiRequest, apiRequestOrNull } from "./api";
+import { ErroApi, requisicaoApi, requisicaoApiOuNulo } from "./api";
 
 export type TipoConteudo = "HIRAGANA" | "KATAKANA" | "KANJI" | "IMAGEM" | "FRASE";
 
@@ -58,9 +58,9 @@ export const RESUMO_VAZIO: ResumoProgresso = {
 
 export async function buscarResumo(): Promise<ResumoProgresso> {
   try {
-    return await apiRequest<ResumoProgresso>("/progresso/resumo");
+    return await requisicaoApi<ResumoProgresso>("/progresso/resumo");
   } catch (erro) {
-    if (erro instanceof ApiError) {
+    if (erro instanceof ErroApi) {
       return RESUMO_VAZIO;
     }
     throw erro;
@@ -69,9 +69,9 @@ export async function buscarResumo(): Promise<ResumoProgresso> {
 
 export async function buscarSessao(): Promise<SessaoEstudo | null> {
   try {
-    return await apiRequestOrNull<SessaoEstudo>("/progresso/sessao");
+    return await requisicaoApiOuNulo<SessaoEstudo>("/progresso/sessao");
   } catch (erro) {
-    if (erro instanceof ApiError) {
+    if (erro instanceof ErroApi) {
       return null;
     }
     throw erro;
@@ -79,14 +79,14 @@ export async function buscarSessao(): Promise<SessaoEstudo | null> {
 }
 
 export function registrarResposta(resposta: NovaResposta): Promise<RespostaRegistrada> {
-  return apiRequest<RespostaRegistrada>("/progresso/respostas", {
+  return requisicaoApi<RespostaRegistrada>("/progresso/respostas", {
     method: "POST",
     body: resposta,
   });
 }
 
 export function salvarSessao(sessao: AtualizacaoSessao): Promise<SessaoEstudo> {
-  return apiRequest<SessaoEstudo>("/progresso/sessao", {
+  return requisicaoApi<SessaoEstudo>("/progresso/sessao", {
     method: "PUT",
     body: sessao,
   });
