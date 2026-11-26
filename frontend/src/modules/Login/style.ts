@@ -2,47 +2,85 @@ import styled from "styled-components";
 import { colors } from "../../styles/colors";
 import { PrimaryButton } from "../../styles/GlobalStyles";
 
-export const LoginWrapper = styled.div`
+export const LoginLayout = styled.div`
   min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+export const BrandPanel = styled.aside`
+  background-color: ${colors.washiDark};
+  border-right: 3px solid ${colors.lineStrong};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  padding: 48px 32px;
+
+  @media (max-width: 900px) {
+    border-right: none;
+    border-bottom: 3px solid ${colors.lineStrong};
+    gap: 20px;
+    padding: 40px 24px;
+  }
+`;
+
+export const BrandStamp = styled.span`
+  width: 104px;
+  height: 104px;
+  border: 3px solid ${colors.sealRed};
+  border-radius: 50%;
+  color: ${colors.sealRed};
+  font-family: "Shippori Mincho", serif;
+  font-size: 46px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 32px 20px;
-  background-color: ${colors.washi};
+
+  @media (max-width: 900px) {
+    width: 76px;
+    height: 76px;
+    font-size: 34px;
+  }
 `;
 
-export const LoginCard = styled.div`
-  width: 100%;
-  max-width: 420px;
+export const BrandName = styled.h1`
+  font-family: "Shippori Mincho", serif;
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: ${colors.ink};
+  text-align: center;
+
+  @media (max-width: 900px) {
+    font-size: 32px;
+  }
+`;
+
+export const FormPanel = styled.main`
   background-color: ${colors.surface};
-  border: 3px solid ${colors.lineStrong};
-  border-radius: 20px;
-  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 32px;
+`;
+
+export const FormContent = styled.div`
+  width: 100%;
+  max-width: 360px;
   display: flex;
   flex-direction: column;
   gap: 24px;
 `;
 
-export const LoginStamp = styled.span`
-  align-self: center;
-  width: 56px;
-  height: 56px;
-  border: 2px solid ${colors.sealRed};
-  border-radius: 50%;
-  color: ${colors.sealRed};
-  font-family: "Shippori Mincho", serif;
-  font-size: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const LoginHeader = styled.div`
+export const FormHeader = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  text-align: center;
 `;
 
 export const LoginForm = styled.form`
@@ -90,13 +128,14 @@ export const SubmitButton = styled(PrimaryButton)`
 `;
 
 export const ToggleModeButton = styled.button`
+  align-self: flex-start;
   border: none;
   background: none;
   color: ${colors.indigo};
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  padding: 4px;
+  padding: 4px 0;
 
   &:hover {
     color: ${colors.sealRed};
@@ -121,6 +160,5 @@ export const ErrorMessage = styled.p`
 export const FooterNote = styled.p`
   font-size: 12px;
   color: ${colors.inkSoft};
-  text-align: center;
   line-height: 1.5;
 `;
