@@ -3,8 +3,19 @@ import { Subtitulo } from "../../styles/GlobalStyles";
 import { ContainerQuiz, GradeQuiz, ContadorAcertos } from "./style";
 import { flashcardsPorCategoria, type CategoriaFlashcard, type ItemFlashcard } from "./dados";
 import { CartaoFlashcard } from "./CartaoFlashcard";
+import {
+  registrarRespostaEmSegundoPlano,
+  salvarSessaoEmSegundoPlano,
+  type TipoConteudo,
+} from "../../services/progresso";
 
 const QUANTIDADE_SLOTS = 5;
+
+const tipoPorCategoria: Record<CategoriaFlashcard, TipoConteudo> = {
+  hiragana: "HIRAGANA",
+  katakana: "KATAKANA",
+  kanji: "KANJI",
+};
 
 function criarPonteirosIniciais() {
   return Array.from({ length: QUANTIDADE_SLOTS }, (_, indice) => indice);
@@ -39,10 +50,22 @@ export function TreinoCartas({ categoria }: TreinoCartasProps) {
   const refsCampos = useRef<Array<HTMLInputElement | null>>([]);
 
   function tratarAcerto(indiceSlot: number) {
+    const item = baralho[ponteirosSlots[indiceSlot] % baralho.length];
+    const tipoConteudo = tipoPorCategoria[categoria];
+    const posicao = quantidadeAcertos + 1;
+
     definirPonteirosSlots((atual) =>
       atual.map((ponteiro, indice) => (indice === indiceSlot ? ponteiro + QUANTIDADE_SLOTS : ponteiro))
     );
-    definirQuantidadeAcertos((atual) => atual + 1);
+    definirQuantidadeAcertos(posicao);
+
+    registrarRespostaEmSegundoPlano({ tipoConteudo, itemId: item.id, acertou: true });
+    salvarSessaoEmSegundoPlano({
+      tipoConteudo,
+      itemId: item.id,
+      posicao,
+      totalItens: baralho.length,
+    });
   }
 
   function focarPrimeiroCampo() {

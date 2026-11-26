@@ -3,6 +3,10 @@ import { Titulo, Subtitulo } from "../../styles/GlobalStyles";
 import { frases, type ItemFrase } from "./dados";
 import { ExercicioFrase } from "./ExercicioFrase";
 import {
+  registrarRespostaEmSegundoPlano,
+  salvarSessaoEmSegundoPlano,
+} from "../../services/progresso";
+import {
   ContainerExercicio,
   CartaoExercicio,
   CartaoResultado,
@@ -34,6 +38,18 @@ export function Frases() {
     if (acertou) {
       definirQuantidadeAcertos((atual) => atual + 1);
     }
+
+    registrarRespostaEmSegundoPlano({
+      tipoConteudo: "FRASE",
+      itemId: baralho[indiceAtual].id,
+      acertou,
+    });
+    salvarSessaoEmSegundoPlano({
+      tipoConteudo: "FRASE",
+      itemId: baralho[indiceAtual].id,
+      posicao: indiceAtual + 1,
+      totalItens: baralho.length,
+    });
   }
 
   function tratarAvanco() {

@@ -91,3 +91,11 @@ export function salvarSessao(sessao: AtualizacaoSessao): Promise<SessaoEstudo> {
     body: sessao,
   });
 }
+
+export function registrarRespostaEmSegundoPlano(resposta: NovaResposta): void {
+  void registrarResposta(resposta).catch(() => undefined);
+}
+
+export function salvarSessaoEmSegundoPlano(sessao: AtualizacaoSessao): void {
+  void salvarSessao(sessao).catch(() => undefined);
+}

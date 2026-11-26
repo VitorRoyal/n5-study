@@ -59,7 +59,7 @@ export const BotaoPrimario = styled.button`
   font-weight: 500;
   padding: 10px 20px;
   border-radius: 2px;
-  cursor: ponteiro;
+  cursor: pointer;
   transition: background-color 0.15s ease, color 0.15s ease;
 
   &:hover {
@@ -81,7 +81,7 @@ export const BotaoSecundario = styled.button`
   font-weight: 500;
   padding: 10px 20px;
   border-radius: 2px;
-  cursor: ponteiro;
+  cursor: pointer;
   transition: border-color 0.15s ease, color 0.15s ease;
 
   &:hover {

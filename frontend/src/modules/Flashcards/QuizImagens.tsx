@@ -8,6 +8,10 @@ import {
 import { Subtitulo } from "../../styles/GlobalStyles";
 import { CartaoPerguntaImagem } from "./CartaoPerguntaImagem";
 import {
+  registrarRespostaEmSegundoPlano,
+  salvarSessaoEmSegundoPlano,
+} from "../../services/progresso";
+import {
   ContainerQuizImagem,
   CartaoResultadoImagem,
   PontuacaoResultadoImagem,
@@ -45,6 +49,18 @@ export function QuizImagens() {
     if (acertou) {
       definirQuantidadeAcertos((atual) => atual + 1);
     }
+
+    registrarRespostaEmSegundoPlano({
+      tipoConteudo: "IMAGEM",
+      itemId: perguntas[indiceAtual].cartao.id,
+      acertou,
+    });
+    salvarSessaoEmSegundoPlano({
+      tipoConteudo: "IMAGEM",
+      itemId: perguntas[indiceAtual].cartao.id,
+      posicao: indiceAtual + 1,
+      totalItens: perguntas.length,
+    });
   }
 
   function tratarAvanco() {
